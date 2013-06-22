@@ -38,4 +38,24 @@
 
 	</dependencies>
 	
+	<build>
+    	<plugins>	
+			<plugin>
+	  			<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>9.0.0.v20130308</version>
+				<configuration>
+					<httpConnector>
+						<port>8888</port>
+					</httpConnector>
+    				<scanIntervalSeconds>10</scanIntervalSeconds>
+    				<webAppSourceDirectory>${basedir}/WebContent</webAppSourceDirectory>
+    				<webApp>
+    					<contextPath>/console-ui</contextPath>
+    				</webApp>
+				</configuration>	  			
+			</plugin>
+		</plugins>
+	</build>
+	
 </project>
