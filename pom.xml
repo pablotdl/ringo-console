@@ -35,6 +35,12 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
+		
+		<dependency>
+		    <groupId>org.elasticsearch</groupId>
+		    <artifactId>elasticsearch</artifactId>
+		    <version>0.90.1</version>
+		</dependency>		
 
 	</dependencies>
 	
@@ -48,11 +54,11 @@
 					<httpConnector>
 						<port>8888</port>
 					</httpConnector>
-    				<scanIntervalSeconds>10</scanIntervalSeconds>
     				<webAppSourceDirectory>${basedir}/WebContent</webAppSourceDirectory>
     				<webApp>
     					<contextPath>/console-ui</contextPath>
     				</webApp>
+    				<reload>manual</reload>
 				</configuration>	  			
 			</plugin>
 		</plugins>
