@@ -13,36 +13,87 @@
 		vero proident, incidunt magna error totam cupidatat minus beatae
 		dolores eaque.</p>
 	<div class="row"></div>
+
 	<div class="well">
-		<div class="row-fluid">
-			<div class="span3" style="border-right: 1px solid #b3b3b3">
-				<p style="font-size: 70px; padding: 20px 0px">
-					SLA <span style="font-size: 40px">#1</span>
-				</p>
-				<span class="label label-success">Normal</span> <span class="badge">12</span>
-				<a class="btn pull-right btn-info btn-mini"
-					style="margin-right: 10px">Info</a>
-			</div>
-			<div class="span3">
-				<p>cpu</p>
-				<p style="font-size: 90px; padding: 20px 0px">
-					72 <span style="font-size: 40px">%</span>
-				</p>
-			</div>
-			<div class="span3">
-				<p>memory</p>
-				<p style="font-size: 90px; padding: 20px 0px">
-					200 <span style="font-size: 40px">MB</span>
-				</p>
-			</div>
-			<div class="span3">
-				<p>rps</p>
-				<p style="font-size: 90px; padding: 20px 0px">
-					13 <span style="font-size: 40px">r/s</span>
-				</p>
+		<div class="container-fluid" >
+			<div class="row-fluid">
+				<div class="span3 first">
+					<p class="name">
+						SLA <span class="id">#1</span>
+					</p>
+					<a class="collapser collapsed" data-toggle="collapse" data-target="#detail_1" ><i class="icon-chevron-right"></i><i class="icon-chevron-down"></i></a>
+					<span class="label label-success pull-right status">Normal</span>
+				</div>
+				<div class="span2 stat">
+					<p class="key">nodes</p>
+					<p class="value">12</p>
+				</div>
+				<div class="span7">
+					<div class="node" ></div>
+					<div class="node" ></div>
+					<div class="node" ></div>
+					<div class="node" ></div>
+					<div class="node" ></div>
+					<div class="node" ></div>
+					<div class="node" ></div>
+					<div class="node" ></div>
+					<div class="node" ></div>
+					<div class="node" ></div>
+					<div class="node" ></div>
+					<div class="node" ></div>
+					<div class="node" ></div>
+					<div class="node" ></div>
+					<div class="node" ></div>
+					<div class="node" ></div>
+					<div class="node" ></div>
+					<div class="node" ></div>
+					<div class="node" ></div>
+					<div class="node" ></div>
+					<div class="node" ></div>
+					<div class="node" ></div>
+					<div class="node" ></div>
+					<div class="node" ></div>
+					<div class="node" ></div>
+					<div class="node" ></div>
+					<div class="node" ></div>
+					<div class="node" ></div>
+					<div class="node" ></div>
+					<div class="node" ></div>
+					<div class="node" ></div>
+					<div class="node" ></div>
+					<div class="node" ></div>
+					<div class="node" ></div>
+					<div class="node" ></div>
+					<div class="node" ></div>
+					<div class="node" ></div>
+					<div class="node" ></div>
+				</div>
 			</div>
 		</div>
-		<div class="row"></div>
+		<div id="detail_1" class="container-fluid collapse" >
+			<div class="row-fluid">
+				<div class="span3 first">
+					<div class="btn-toolbar">
+					  <div class="btn-group">
+					    <a class="btn" href="#"><i class="icon-circle-arrow-up"></i></a>
+					    <a class="btn" href="#"><i class="icon-circle-arrow-down"></i></a>
+					  </div>
+					</div>
+				</div>
+				<div class="span3 stat">
+					<p class="key">cpu</p>
+					<p class="value">72 <span class="unit">%</span></p>
+				</div>
+				<div class="span3 stat">
+					<p class="key">memory</p>
+					<p class="value">200 <span class="unit">MB</span></p>
+				</div>
+				<div class="span3 stat">
+					<p class="key">rps</p>
+					<p class="value">13 <span class="unit">r/s</span></p>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 <jsp:include page="footer.jsp"/>

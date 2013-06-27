@@ -4,23 +4,23 @@
 <html>
   
   <head>
-    <title>Divshot: Getting Started</title>
+    <title>Ringo: Monitoring Console</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
-    <link rel="stylesheet" href="https://app.divshot.com/css/bootstrap.css">
-    <link rel="stylesheet" href="https://app.divshot.com/css/bootstrap-responsive.css">
-    <script src="https://app.divshot.com/js/jquery.min.js"></script>
-    <script src="https://app.divshot.com/js/bootstrap.min.js"></script>
-  </head>
-  
-  <body>
-    <title>Divshot: Getting Started</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    
     <link rel="stylesheet" href="https://app.divshot.com/css/bootstrap.css">
     <link rel="stylesheet" href="https://app.divshot.com/css/bootstrap-responsive.css">
     <link rel="stylesheet" href="https://app.divshot.com/css/divshot-util.css">
-    <link rel="stylesheet" href="https://app.divshot.com/css/divshot-canvas.css">
+    <link rel="stylesheet" href="https://app.divshot.com/css/divshot-canvas.css">    
+    <link rel="stylesheet" href="/console-ui/css/app.css" >
+    
+    <script src="https://app.divshot.com/js/jquery.min.js"></script>
+    <script src="https://app.divshot.com/js/bootstrap.min.js"></script>
+    <script src="/console-ui/js/app.js"></script>
+    
+  </head>
+  
+  <body>
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
@@ -28,13 +28,10 @@
           <div class="navbar-content">
             <ul class="nav  pull-right">
               <li class="active">
-                <a href="#">Quickstart</a> 
+                <a href="#">Dashboard</a> 
               </li>
               <li>
-                <a href="#">Home</a> 
-              </li>
-              <li>
-                <a href="#">Home</a> 
+                <a href="#">About</a> 
               </li>
             </ul>
           </div>

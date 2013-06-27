@@ -1,0 +1,57 @@
+.container-fluid {
+	padding: 0px;
+}
+
+div.first {
+	border-right: 1px solid #b3b3b3;
+}
+div.first .name {
+	font-size: 70px; 
+	padding: 20px 0px;
+}
+
+div.first .name .id {
+	font-size: 40px;
+}
+
+div.first .status {
+	margin-right: 10px;
+}
+
+div.first .collapser {
+	cursor: pointer;
+}
+
+div.first a .icon-chevron-right {
+	display: none;
+}
+div.first a .icon-chevron-down {
+	display: block;
+}
+
+div.first a.collapsed .icon-chevron-right {
+	display: block;
+}
+div.first a.collapsed .icon-chevron-down {
+	display: none;
+}
+
+.stat .value {
+	font-size: 90px; 
+	padding: 20px 0px;
+}
+.stat .value .unit {
+	font-size: 40px
+}
+
+.node {
+	width: 28px; 
+	height: 28px;
+	border: 1px solid #b3b3b3;  
+	float:left; 
+	margin: 0px 0px 5px 5px;
+}
+
+.node.normal {
+	border: 1px solid #b3b3b3; 
+}

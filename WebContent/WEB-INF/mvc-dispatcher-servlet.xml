@@ -22,6 +22,9 @@
 			<value>.jsp</value>
 		</property>
 	</bean>
+	
+	<mvc:resources mapping="/css/**" location="/resources/stylesheets/" />
+	<mvc:resources mapping="/js/**" location="/resources/javascripts/" />
 
 </beans>
 
