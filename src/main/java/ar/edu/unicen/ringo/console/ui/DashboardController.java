@@ -1,4 +1,4 @@
-package ar.edu.unicen.ringo.console;
+package ar.edu.unicen.ringo.console.ui;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

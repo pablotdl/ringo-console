@@ -54,7 +54,6 @@
 					<httpConnector>
 						<port>8888</port>
 					</httpConnector>
-    				<webAppSourceDirectory>${basedir}/WebContent</webAppSourceDirectory>
     				<webApp>
     					<contextPath>/console-ui</contextPath>
     				</webApp>
