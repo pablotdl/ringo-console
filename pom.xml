@@ -12,7 +12,7 @@
 	<name>Console SpringMVC UI</name>
 
 	<properties>
-		<spring.version>3.0.5.RELEASE</spring.version>
+		<spring.version>3.0.7.RELEASE</spring.version>
 	</properties>
 
 	<dependencies>
@@ -41,6 +41,12 @@
 		    <artifactId>elasticsearch</artifactId>
 		    <version>0.90.1</version>
 		</dependency>
+
+        <dependency>
+            <groupId>fr.pilato.spring</groupId>
+            <artifactId>spring-elasticsearch</artifactId>
+            <version>0.2.0</version>
+        </dependency>
 
 	</dependencies>
 	
