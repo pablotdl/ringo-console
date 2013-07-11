@@ -10,11 +10,13 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.SearchHit;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class ElasticSearchCleanTest {
     
 	@Test
+	@Ignore
 	public void test() {
 		
 		// on startup
