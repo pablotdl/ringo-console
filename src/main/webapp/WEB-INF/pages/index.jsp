@@ -1,5 +1,3 @@
-
-<jsp:include page="header.jsp"/>
 <div class="container">
 	<div class="page-header">
 		<h1>Monitoring Console</h1>
@@ -96,4 +94,3 @@
 		</div>
 	</div>
 </div>
-<jsp:include page="footer.jsp"/>
