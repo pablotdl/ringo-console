@@ -18,8 +18,9 @@ public class ElasticSearchHistogramFacetTest {
 		// on startup
 		Client client = new TransportClient().addTransportAddress(new InetSocketTransportAddress("localhost", 9300));		
 		
-		TermsFacetBuilder termsFacetBuilder = FacetBuilders.termsFacet("termsFacet").field("sla").size(2);
-		HistogramFacetBuilder histogramFacetBuilder = FacetBuilders.histogramFacet("histogramFacet").field("execution_time").interval(10);
+		TermsFacetBuilder termsFacetBuilder = FacetBuilders.termsFacet("termsFacet").field("node").size(10);
+		//DateHistogramFacetBuilder dateHistogramFacetBuilder = FacetBuilders.dateHistogramFacet("dateHistogramFacet").field("timestamp").interval("year");
+		HistogramFacetBuilder histogramFacetBuilder = FacetBuilders.histogramFacet("histogramFacet").field("execution_time").interval(100);
 		
 		SearchResponse searchresponse = client.prepareSearch()
 				.addFacet(termsFacetBuilder)

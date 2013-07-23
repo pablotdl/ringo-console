@@ -16,7 +16,6 @@ import org.junit.Test;
 public class ElasticSearchCleanTest {
     
 	@Test
-	@Ignore
 	public void test() {
 		
 		// on startup
@@ -26,14 +25,20 @@ public class ElasticSearchCleanTest {
 		SearchResponse searchresponse = client.prepareSearch().setSize(100).execute().actionGet();
 		assertThat(searchresponse.status(), is(RestStatus.OK));
 		
+		System.out.println("getTotalHits: " + searchresponse.getHits().getTotalHits());
 		if ( searchresponse.getHits().getTotalHits() > 0 ) {
 			BulkRequestBuilder bulkRequest = node.client().prepareBulk();
 			
 			for(SearchHit hit : searchresponse.getHits()) {
+				System.out.println("getIndex" + hit.getIndex());
+				System.out.println("getType: " + hit.getType());
+				System.out.println("getId: " + hit.getId());
+				
 				bulkRequest.add(client.prepareDelete(hit.getIndex(), hit.getType(), hit.getId()));
 			} 		
 			
 			BulkResponse bulkResponse = bulkRequest.execute().actionGet();
+			System.out.println("hasFailures: " + bulkResponse.hasFailures());
 			assertThat(bulkResponse.hasFailures(), is(false));
 		}
 
