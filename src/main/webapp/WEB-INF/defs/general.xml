@@ -11,5 +11,9 @@
     <definition name="index" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/pages/index.jsp" />
     </definition>
+
+    <definition name="sla.list" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/pages/sla/list.jsp" />
+    </definition>
  
 </tiles-definitions>
