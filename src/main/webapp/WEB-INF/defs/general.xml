@@ -5,7 +5,21 @@
 <tiles-definitions>
     <definition name="base.definition"
         template="/WEB-INF/pages/common/layout.jsp">
-        <put-attribute name="body" value="" />
+        <put-attribute name="cssload" 		value="/WEB-INF/pages/common/header/cssload.jsp" />
+        <put-attribute name="search" 		value="/WEB-INF/pages/common/header/search.jsp" />
+        <put-attribute name="message" 		value="/WEB-INF/pages/common/header/message.jsp" />
+        <put-attribute name="notification"  value="/WEB-INF/pages/common/header/notification.jsp" />
+        <put-attribute name="config" 		value="/WEB-INF/pages/common/header/config.jsp" />
+        <put-attribute name="profile" 		value="/WEB-INF/pages/common/header/profile.jsp" />
+        
+        <put-attribute name="menu"			value="/WEB-INF/pages/common/sidebar/menu.jsp" />
+        <put-attribute name="submenu"		value="/WEB-INF/pages/common/sidebar/submenu.jsp" />
+        <put-attribute name="extras"		value="/WEB-INF/pages/common/sidebar/extras.jsp" />
+        
+        <put-attribute name="body" 			value="" />
+        
+        <put-attribute name="copyright"		value="/WEB-INF/pages/common/footer/copyright.jsp" />
+        <put-attribute name="jsload"		value="/WEB-INF/pages/common/footer/jsload.jsp" />
     </definition>
  
     <definition name="index" extends="base.definition">
