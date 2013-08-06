@@ -2,9 +2,9 @@
              <div class="pagetitle">
                 <h1>Dashboard.</h1> 
                 <div class="btn-group">
+                  <button class="btn active">Hour</button>
                   <button class="btn">Day</button>
                   <button class="btn">Week</button>
-                  <button class="btn">Month</button>
                 </div>
                 <div class="clearfix"></div>
              </div>
@@ -14,19 +14,19 @@
              <div class="info-box">
                <div class="row-fluid stats-box">
                   <div class="span4">
-                    <div class="stats-box-title">Vizitor</div>
+                    <div class="stats-box-title">Nodes</div>
                     <div class="stats-box-all-info"><img src="images/icon/icon_vizitors_stats.png" alt=""> 365K</div>
                     <div class="wrap-chart"><div id="visitor-stat" class="chart"></div></div>
                   </div>
                   
                   <div class="span4">
-                    <div class="stats-box-title">Likes</div>
+                    <div class="stats-box-title">Events</div>
                     <div class="stats-box-all-info"><img src="images/icon/icon_like_stats.png" alt=""> 35.00</div>
                     <div class="wrap-chart"><div id="order-stat" class="chart"></div></div>
                   </div>
                   
                   <div class="span4">
-                    <div class="stats-box-title">Orders</div>
+                    <div class="stats-box-title">Response Time</div>
                     <div class="stats-box-all-info"><img src="images/icon/icon_orders_stats.png" alt=""> 1.234</div>
                     <div class="wrap-chart"><div id="user-stat" class="chart"></div></div>
                   </div>
