@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.elasticsearch.ElasticSearchException;
+import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
@@ -56,12 +57,19 @@ public class SlaManagementService {
                 continue;
             }
             try {
-                results.add(mapper.readValue(source, Sla.class));
+                Sla sla = mapper.readValue(source, Sla.class);
+                sla.setId(hit.getId());
+                results.add(sla);
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
         return results;
+    }
+
+    public void delete(String id) {
+        DeleteResponse result = client.prepareDelete("agent", "sla", id)
+                .execute().actionGet();
     }
 }
