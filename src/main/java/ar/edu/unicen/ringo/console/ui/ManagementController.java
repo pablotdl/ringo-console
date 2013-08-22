@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import ar.edu.unicen.ringo.console.model.Identificable;
 import ar.edu.unicen.ringo.console.model.Sla;
 import ar.edu.unicen.ringo.console.service.SlaManagementService;
 
