@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.elasticsearch.ElasticSearchException;
-import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
@@ -88,7 +87,7 @@ public class SlaManagementService {
     }
 
     public void delete(String id) {
-        DeleteResponse result = client.prepareDelete("agent", "sla", id)
-                .execute().actionGet();
+        client.prepareDelete("agent", "sla", id).execute().actionGet();
+        client.admin().indices().prepareRefresh("agent").execute().actionGet();
     }
 }

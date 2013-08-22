@@ -51,10 +51,11 @@
 
 <script type="text/javascript">
 
-
+    var oTable
 	$(document).ready(function() {
-		var oTable = $('#sla-table').dataTable({
+		oTable = $('#sla-table').dataTable({
 			"bProcessing" : true,
+			"bDeferRender": true,
 			"bAutoWidth": true,
 			"sAjaxSource" : "./sla/list",
 			"aoColumns" : [{"mData": null,
@@ -83,13 +84,11 @@
 		});
 	});
     function doDelete(id) {
-    	alert ("Deleting " + id);
         $.ajax({
             url: "./sla/" + id,
             type: 'DELETE',
             success: function (result) {
-                alert ("Deleted SLA " + id);
-                oTable.fnReloadAjax();
+            	oTable.fnDraw();
             }
         });
         return false;

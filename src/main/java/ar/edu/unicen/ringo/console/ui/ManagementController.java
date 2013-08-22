@@ -1,12 +1,14 @@
 package ar.edu.unicen.ringo.console.ui;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import ar.edu.unicen.ringo.console.model.Sla;
 import ar.edu.unicen.ringo.console.service.SlaManagementService;
@@ -55,6 +57,7 @@ public class ManagementController {
         return new ListWrapper(service.listSlas());
     }
 
+    @ResponseStatus(value = HttpStatus.NO_CONTENT, reason = "Success")
     @RequestMapping(value = "/sla/{id}", method = RequestMethod.DELETE)
     public void deleteSla(@PathVariable("id") String id) {
         service.delete(id);
