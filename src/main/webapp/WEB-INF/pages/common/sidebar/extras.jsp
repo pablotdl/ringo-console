@@ -1,45 +1,46 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
           <!--New Files-->
           <div class="new-files">
              <div class="title">New Files</div>
              
              <div class="files">
                <div class="file">
-                  <div class="file-format"><img src="images/icon/file_pdf.png" alt=""></div>
+                  <div class="file-format"><img src="<c:url value="images/icon/file_pdf.png" />" alt=""></div>
                   <div class="file-info">
                     <div class="file-name">Mani_CV.pdf <a href="#"><i class="icon-remove"></i></a></div>
                     <div class="file-date">January 30, 2013</div>
                   </div>
                 </div>
                 <div class="file">
-                  <div class="file-format"><img src="images/icon/file_doc.png" alt=""></div>
+                  <div class="file-format"><img src="<c:url value="images/icon/file_doc.png" />" alt=""></div>
                   <div class="file-info">
                     <div class="file-name">Mani_CV.doc <a href="#"><i class="icon-remove"></i></a></div>
                     <div class="file-date">January 30, 2013</div>
                   </div>
                 </div>
                 <div class="file">
-                  <div class="file-format"><img src="images/icon/file_jpg.png" alt=""></div>
+                  <div class="file-format"><img src="<c:url value="images/icon/file_jpg.png" />" alt=""></div>
                   <div class="file-info">
                     <div class="file-name">Mani_CV.jpg <a href="#"><i class="icon-remove"></i></a></div>
                     <div class="file-date">January 30, 2013</div>
                   </div>
                 </div>
                 <div class="file">
-                  <div class="file-format"><img src="images/icon/file_xls.png" alt=""></div>
+                  <div class="file-format"><img src="<c:url value="images/icon/file_xls.png" />" alt=""></div>
                   <div class="file-info">
                     <div class="file-name">Mani_CV.xls <a href="#"><i class="icon-remove"></i></a></div>
                     <div class="file-date">January 30, 2013</div>
                   </div>
                 </div>
                 <div class="file">
-                  <div class="file-format"><img src="images/icon/file_zip.png" alt=""></div>
+                  <div class="file-format"><img src="<c:url value="images/icon/file_zip.png" />" alt=""></div>
                   <div class="file-info">
                     <div class="file-name">Mani_CV.zip <a href="#"><i class="icon-remove"></i></a></div>
                     <div class="file-date">January 30, 2013</div>
                   </div>
                 </div>
                 <div class="file">
-                  <div class="file-format"><img src="images/icon/file_txt.png" alt=""></div>
+                  <div class="file-format"><img src="<c:url value="images/icon/file_txt.png" />" alt=""></div>
                   <div class="file-info">
                     <div class="file-name">Mani_CV.txt <a href="#"><i class="icon-remove"></i></a></div>
                     <div class="file-date">January 30, 2013</div>

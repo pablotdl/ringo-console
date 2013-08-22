@@ -1,4 +1,4 @@
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!--notification box-->
 <div class="dropdown left">
 	<a class="dropdown-toggle head-button-link notification"

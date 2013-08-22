@@ -1,10 +1,10 @@
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!--profile box -->
 <div class="dropdown left profile">
 	<a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span
 		class="double-spacer"></span>
 		<div class="profile-avatar">
-			<img src="images/avatar.png" alt="">
+			<img src="<c:url value="images/avatar.png" />" alt="">
 		</div>
 		<div class="profile-username">
 			<span>Welcome,</span> John Doe!
