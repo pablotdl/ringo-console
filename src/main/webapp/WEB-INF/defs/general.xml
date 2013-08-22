@@ -29,5 +29,9 @@
     <definition name="sla.list" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/pages/sla/list.jsp" />
     </definition>
+
+    <definition name="sla.form" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/pages/sla/form.jsp" />
+    </definition>
  
 </tiles-definitions>

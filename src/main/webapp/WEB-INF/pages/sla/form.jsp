@@ -1,5 +1,4 @@
 
-<jsp:include page="../header.jsp"/>
 <div class="container-fluid">
     <div class="row"></div>
     <div class="row-fluid">
@@ -11,12 +10,12 @@
 				<div class="control-group">
 					<label class="control-label" for="name">SLA name</label>
 					<div class="controls">
-					<input type="text" id="name" name="name" placeholder="Name..." />
+					<input type="text" id="name" name="name" placeholder="Name..." value="${sla.name}" />
 					</div>
 				</div>
 				<div class="control-group">
 				    <label class="control-label" for="description">Description</label>
-				    <div class="controls"><textarea id="description" name="description"></textarea></div>
+				    <div class="controls"><textarea id="description" name="description">${sla.description}</textarea></div>
 				</div>
 				<div class="control-group">
                     <div class="controls">
@@ -30,4 +29,3 @@
 		</div>
 	</div>
 </div>
-<jsp:include page="../footer.jsp"/>
