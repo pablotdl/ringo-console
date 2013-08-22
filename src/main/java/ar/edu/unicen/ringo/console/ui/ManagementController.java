@@ -2,10 +2,11 @@ package ar.edu.unicen.ringo.console.ui;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import ar.edu.unicen.ringo.console.model.Sla;
 import ar.edu.unicen.ringo.console.service.SlaManagementService;
@@ -23,7 +24,16 @@ public class ManagementController {
 
     @RequestMapping(value = "/sla/new", method = RequestMethod.GET)
     public String newSla(@ModelAttribute("sla") Sla sla) {
-        return "sla/form";
+        System.out.println("Entering new SLA form");
+        return "sla.form";
+    }
+
+    @RequestMapping(value = "/sla/{id}", method = RequestMethod.GET)
+    public String editSla(@ModelAttribute("sla") Sla sla,
+            @PathVariable("id") String id) {
+        sla.loadFrom(service.getSla(id));
+        System.out.println("About to render form");
+        return "sla.form";
     }
 
     @RequestMapping(value = "/sla/new", method = RequestMethod.POST)
@@ -34,9 +44,20 @@ public class ManagementController {
     }
 
     @RequestMapping(value = "/sla", method = RequestMethod.GET)
-    public String list(ModelMap map) {
-        map.put("slas", service.listSlas());
-        return "sla/list";
+    public String list() {
+        System.out.println("Showing list page");
+        return "sla.list";
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/sla/list", method = RequestMethod.GET)
+    public ListWrapper listSlas() {
+        return new ListWrapper(service.listSlas());
+    }
+
+    @RequestMapping(value = "/sla/{id}", method = RequestMethod.DELETE)
+    public void deleteSla(@PathVariable("id") String id) {
+        service.delete(id);
+        System.out.println("Deleted SLA " + id);
+    }
 }

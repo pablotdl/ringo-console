@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.elasticsearch.ElasticSearchException;
 import org.elasticsearch.action.delete.DeleteResponse;
+import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
@@ -34,15 +35,33 @@ public class SlaManagementService {
 
     public void save(Sla sla) {
         try {
-            IndexResponse response = client.prepareIndex("agent", "sla", sla.getName())
+            IndexResponse response = client.prepareIndex("agent", "sla")
                     .setSource(mapper.writeValueAsString(sla))
                     .execute()
                     .actionGet();
             //Force refresh.
+            sla.setId(response.getId());
             client.admin().indices().prepareRefresh("agent").execute().actionGet();
             response.writeTo(new OutputStreamStreamOutput(System.out));
         } catch (ElasticSearchException | IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public Sla getSla(String id) {
+        GetResponse result = client.prepareGet("agent", "sla", id).execute()
+                .actionGet();
+        String source = result.getSourceAsString();
+        System.out.println("Loaded SLA: " + source);
+        try {
+            Sla sla = mapper.readValue(source, Sla.class);
+            sla.setId(result.getId());
+            System.out.println("Created SLA");
+            return sla;
+        } catch (IOException e) {
+            System.out.println("Error creating sla");
+            e.printStackTrace();
+            return null;
         }
     }
 

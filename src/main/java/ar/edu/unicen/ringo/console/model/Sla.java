@@ -54,4 +54,11 @@ public class Sla {
         return builder.toString();
     }
 
+    public void loadFrom(Sla other) {
+        id = other.id;
+        name = other.name;
+        description = other.description;
+        enabled = other.enabled;
+    }
+
 }
