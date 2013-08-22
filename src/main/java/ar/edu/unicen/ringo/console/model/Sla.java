@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Sla {
+public class Sla implements Identificable {
 
     @XmlElement
     private String id;
@@ -40,9 +40,17 @@ public class Sla {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
+    /* (non-Javadoc)
+     * @see ar.edu.unicen.ringo.console.model.Identificable#getId()
+     */
+    @Override
     public String getId() {
         return id;
     }
+    /* (non-Javadoc)
+     * @see ar.edu.unicen.ringo.console.model.Identificable#setId(java.lang.String)
+     */
+    @Override
     public void setId(String id) {
         this.id = id;
     }

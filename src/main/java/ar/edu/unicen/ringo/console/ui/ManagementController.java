@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import ar.edu.unicen.ringo.console.model.Identificable;
 import ar.edu.unicen.ringo.console.model.Sla;
 import ar.edu.unicen.ringo.console.service.SlaManagementService;
 
@@ -33,7 +34,7 @@ public class ManagementController {
     @RequestMapping(value = "/sla/{id}", method = RequestMethod.GET)
     public String editSla(@ModelAttribute("sla") Sla sla,
             @PathVariable("id") String id) {
-        sla.loadFrom(service.getSla(id));
+        sla.loadFrom(service.get(id));
         System.out.println("About to render form");
         return "sla.form";
     }
@@ -54,7 +55,7 @@ public class ManagementController {
     @ResponseBody
     @RequestMapping(value = "/sla/list", method = RequestMethod.GET)
     public ListWrapper listSlas() {
-        return new ListWrapper(service.listSlas());
+        return new ListWrapper(service.list());
     }
 
     @ResponseStatus(value = HttpStatus.NO_CONTENT, reason = "Success")
