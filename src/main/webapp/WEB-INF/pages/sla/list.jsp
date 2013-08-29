@@ -27,18 +27,6 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td class="t_center"><input type="checkbox" id="c2" name="cc" /><label for="c2"><span></span></label></td>
-                <td>sla 1</td>
-                <td class="hidden-mobile">An SLA</td>
-                <td class="action-table"><a href="#"><img src="images/icon/table_view.png" alt=""></a> <a href="#"><img src="images/icon/table_edit.png" alt=""></a> <a href="#"><img src="images/icon/table_del.png" alt=""></a></td>
-              </tr>
-              <tr>
-                <td class="t_center"><input type="checkbox" id="c3" name="cc" /><label for="c3"><span></span></label></td>
-                <td>sla 2</td>
-                <td class="hidden-mobile">Another SLA</td>
-                <td class="action-table"><a href="#"><img src="images/icon/table_view.png" alt=""></a> <a href="#"><img src="images/icon/table_edit.png" alt=""></a> <a href="#"><img src="images/icon/table_del.png" alt=""></a></td>
-              </tr>
             </tbody>
           </table>  
 
