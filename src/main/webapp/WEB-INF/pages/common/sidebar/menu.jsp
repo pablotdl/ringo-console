@@ -1,9 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<ul class="main-menu">
-	<li class="active"><a href="dashboard.html"><i
-			class="general"></i> General</a></li>
-	<li><a href="ui.html"><i class="components"></i> UI</a></li>
+<ul id="main-menu" class="main-menu">
+	<li class="active"><a href="#dashboard" data-toggle="tab"><i class="general"></i> General</a></li>
+	<li><a href="#admin" data-toggle="tab"><i class="components"></i> Admin</a></li>
 	<li><a href="forms.html"><i class="forms"></i> Forms</a></li>
 	<li><a href="charts.html"><i class="statistics"></i>
 			Statistics</a></li>

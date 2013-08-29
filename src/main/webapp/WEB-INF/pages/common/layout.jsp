@@ -47,7 +47,6 @@
 		<div id="menu" role="navigation">
 			<tiles:insertAttribute name="menu" />
 			<tiles:insertAttribute name="submenu" />
-			<tiles:insertAttribute name="extras" />
 			<div class="clearfix"></div>
 		</div>
 		<!--SIDEBAR END-->
