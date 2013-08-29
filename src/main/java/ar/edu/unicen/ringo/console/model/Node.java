@@ -17,4 +17,10 @@ public class Node implements Identificable {
         // TODO Auto-generated method stub
         
     }
+
+    public void loadFrom(Node node) {
+        // TODO Auto-generated method stub
+        
+    }
+
 }
