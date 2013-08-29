@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import ar.edu.unicen.ringo.console.model.Node;
 import ar.edu.unicen.ringo.console.model.Sla;
+import ar.edu.unicen.ringo.console.service.NodeManagementService;
 import ar.edu.unicen.ringo.console.service.SlaManagementService;
 
 /**
@@ -22,7 +24,10 @@ import ar.edu.unicen.ringo.console.service.SlaManagementService;
 public class ManagementController {
 
     @Autowired
-    private SlaManagementService service;
+    private SlaManagementService slaManagementService;
+
+    @Autowired
+    private NodeManagementService nodeManagementService;
 
     @RequestMapping(value = "/sla/new", method = RequestMethod.GET)
     public String newSla(@ModelAttribute("sla") Sla sla) {
@@ -33,14 +38,14 @@ public class ManagementController {
     @RequestMapping(value = "/sla/{id}", method = RequestMethod.GET)
     public String editSla(@ModelAttribute("sla") Sla sla,
             @PathVariable("id") String id) {
-        sla.loadFrom(service.get(id));
+        sla.loadFrom(slaManagementService.get(id));
         System.out.println("About to render form");
         return "sla.form";
     }
 
     @RequestMapping(value = "/sla/new", method = RequestMethod.POST)
     public String create(@ModelAttribute("sla") Sla sla) {
-        service.save(sla);
+        slaManagementService.save(sla);
         System.out.println("Saved an SLA: " + sla);
         return "redirect:/admin/sla";
     }
@@ -54,13 +59,52 @@ public class ManagementController {
     @ResponseBody
     @RequestMapping(value = "/sla/list", method = RequestMethod.GET)
     public ListWrapper listSlas() {
-        return new ListWrapper(service.list());
+        return new ListWrapper(slaManagementService.list());
     }
 
     @ResponseStatus(value = HttpStatus.NO_CONTENT, reason = "Success")
     @RequestMapping(value = "/sla/{id}", method = RequestMethod.DELETE)
     public void deleteSla(@PathVariable("id") String id) {
-        service.delete(id);
+        slaManagementService.delete(id);
         System.out.println("Deleted SLA " + id);
+    }
+
+    @RequestMapping(value = "/node", method = RequestMethod.GET)
+    public String showNodeList() {
+        return "node.list";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/node/list", method = RequestMethod.GET)
+    public ListWrapper listNodes() {
+        return new ListWrapper(nodeManagementService.list());
+    }
+
+    @RequestMapping(value = "/node/new", method = RequestMethod.GET)
+    public String newNode(@ModelAttribute("node") Node node) {
+        System.out.println("Entering new Node form");
+        return "node.form";
+    }
+
+    @RequestMapping(value = "/node/{id}", method = RequestMethod.GET)
+    public String editNode(@ModelAttribute("node") Node node,
+            @PathVariable("id") String id) {
+        node.loadFrom(nodeManagementService.get(id));
+        System.out.println("About to render form");
+        return "node.form";
+    }
+
+    @RequestMapping(value = "/node/new", method = RequestMethod.POST)
+    public String create(@ModelAttribute("node") Node node) {
+        nodeManagementService.save(node);
+        System.out.println("Saved an SLA: " + node);
+        return "redirect:/admin/node";
+    }
+
+    @ResponseStatus(value = HttpStatus.NO_CONTENT, reason = "Success")
+    @RequestMapping(value = "/node/{id}", method = RequestMethod.DELETE)
+    public void deleteNode(@PathVariable("id") String id) {
+        nodeManagementService.delete(id);
+        System.out.println("Deleted Node " + id);
     }
 }
