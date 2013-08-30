@@ -1,0 +1,16 @@
+<?xml version="1.0" standalone="yes"?>
+<menu id="main-menu" styleClass="main-menu">
+  <items>
+    <item name="general" styleClass="general" label="General">
+        <submenu>
+            <item name="dashboard" label="Dashboard" styleClass="icon-home" href="/" />
+        </submenu>
+    </item>
+    <item name="admin" styleClass="components" label="Admin">
+        <submenu>
+            <item name="sla" label="SLA" styleClass="icon-picture" href="/admin/sla" />
+            <item name="node" label="Nodes" styleClass="icon-picture" href="/admin/node" />
+        </submenu>
+    </item>
+  </items>
+</menu>
