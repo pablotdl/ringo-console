@@ -1,48 +1,88 @@
 package ar.edu.unicen.ringo.console.ui;
 
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.List;
+
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.elasticsearch.search.facet.FacetBuilders;
 import org.elasticsearch.search.facet.datehistogram.DateHistogramFacet;
 import org.elasticsearch.search.facet.datehistogram.DateHistogramFacetBuilder;
-import org.elasticsearch.search.facet.termsstats.TermsStatsFacet;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import ar.edu.unicen.ringo.console.model.Sla;
+import ar.edu.unicen.ringo.console.service.SlaManagementService;
 
 @Controller
 public class DashboardController {
 	
 	@RequestMapping("/")
 	public String index(ModelMap model, @RequestParam(value="period", defaultValue="hour") String period) {
-		System.out.println("period: " + period);
-		
 		
 		Client client = new TransportClient().addTransportAddress(new InetSocketTransportAddress("localhost", 9300));
 		
-		DateHistogramFacetBuilder builder = FacetBuilders.dateHistogramFacet("histogram")
-				.keyField("timestamp")
-				.valueField("execution_time")
-				.interval(period);
-		//RangeQueryBuilder query = QueryBuilders.rangeQuery("timestamp").from("2010-03-01").to("2014-04-01");
+		SlaManagementService service = new SlaManagementService();
+		List<Sla> slas = service.list();
 		
-		SearchResponse searchresponse = client.prepareSearch()
-				//.setQuery(query)
-				.addFacet(builder)
-				.execute().actionGet();
+		long to = System.currentTimeMillis();
+		long from = to - millisecondsForPeriod(period,7);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+		String period_from = sdf.format(from);
+		String period_to   = sdf.format(to);
 		
-		DateHistogramFacet histogram = (DateHistogramFacet) searchresponse.getFacets().facetsAsMap().get("histogram");
+		HashMap<String, DateHistogramFacet> histograms = new HashMap<String, DateHistogramFacet>();
+		for(Sla sla : slas) {
+			// Facet by Period 
+			DateHistogramFacetBuilder facet = FacetBuilders.dateHistogramFacet("histogram")
+						.keyField("timestamp")
+						.valueField("execution_time")
+						.interval(period);
+			
+			// Query Filters: SLA & Range by Period 
+			QueryBuilder query = QueryBuilders.boolQuery()
+					.must(QueryBuilders.termQuery("sla", sla.getId()))
+					.must(QueryBuilders.rangeQuery("timestamp").from(period_from).to(period_to));
+			
+			// Client Search
+			SearchResponse searchresponse = client.prepareSearch("agent", "invocation")
+					.setQuery(query)
+					.addFacet(facet)
+					.execute().actionGet();
+			
+			// Get Histogram for SLA
+			DateHistogramFacet histogram = (DateHistogramFacet) searchresponse.getFacets().facetsAsMap().get("histogram");
+			
+			histograms.put(sla.getId(), histogram);
+		}
 		
-		model.addAttribute("facets", histogram);
 		model.addAttribute("period", period);
-		model.addAttribute("message", "Spring 3 MVC Hello World");
+		model.addAttribute("slas", slas);
+		model.addAttribute("histograms", histograms);
 		return "index";
  
+	}
+	
+	private long millisecondsForPeriod(String period, long range) {
+		long base = 3600 * 1000; // 1 hour
+		
+		long factor;
+		if (period.equals("hour")) {
+			factor = 1; // 1 hour
+		}else if (period.equals("day")) {
+			factor = 24; // 1 day
+		} else {
+			factor = 7 * 24; // 1 week
+		}
+		
+		return range * factor * base;
 	}
 
 }
