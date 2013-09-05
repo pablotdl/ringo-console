@@ -12,7 +12,9 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.facet.FacetBuilders;
 import org.elasticsearch.search.facet.datehistogram.DateHistogramFacet;
+import org.elasticsearch.search.facet.datehistogram.DateHistogramFacet.Entry;
 import org.elasticsearch.search.facet.datehistogram.DateHistogramFacetBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,13 +25,15 @@ import ar.edu.unicen.ringo.console.service.SlaManagementService;
 
 @Controller
 public class DashboardController {
+
+	@Autowired
+	private SlaManagementService service;
 	
 	@RequestMapping("/")
 	public String index(ModelMap model, @RequestParam(value="period", defaultValue="hour") String period) {
 		
 		Client client = new TransportClient().addTransportAddress(new InetSocketTransportAddress("localhost", 9300));
 		
-		SlaManagementService service = new SlaManagementService();
 		List<Sla> slas = service.list();
 		
 		long to = System.currentTimeMillis();
@@ -38,7 +42,7 @@ public class DashboardController {
 		String period_from = sdf.format(from);
 		String period_to   = sdf.format(to);
 		
-		HashMap<String, DateHistogramFacet> histograms = new HashMap<String, DateHistogramFacet>();
+		HashMap<String, DateHistogramFacet.Entry> histograms = new HashMap<String, DateHistogramFacet.Entry>();
 		for(Sla sla : slas) {
 			// Facet by Period 
 			DateHistogramFacetBuilder facet = FacetBuilders.dateHistogramFacet("histogram")
@@ -48,19 +52,19 @@ public class DashboardController {
 			
 			// Query Filters: SLA & Range by Period 
 			QueryBuilder query = QueryBuilders.boolQuery()
-					.must(QueryBuilders.termQuery("sla", sla.getId()))
-					.must(QueryBuilders.rangeQuery("timestamp").from(period_from).to(period_to));
+					.must(QueryBuilders.matchQuery("sla", sla.getId()));
+					//.must(QueryBuilders.rangeQuery("timestamp").from(period_from).to(period_to));
 			
 			// Client Search
-			SearchResponse searchresponse = client.prepareSearch("agent", "invocation")
+			SearchResponse searchresponse = client.prepareSearch("")
 					.setQuery(query)
 					.addFacet(facet)
 					.execute().actionGet();
 			
 			// Get Histogram for SLA
 			DateHistogramFacet histogram = (DateHistogramFacet) searchresponse.getFacets().facetsAsMap().get("histogram");
-			
-			histograms.put(sla.getId(), histogram);
+			System.out.println("total: " + histogram.getEntries().get(0).getTotal());
+			if ( histogram.getEntries().size() > 0 ) histograms.put(sla.getId(), histogram.getEntries().get(0));
 		}
 		
 		model.addAttribute("period", period);

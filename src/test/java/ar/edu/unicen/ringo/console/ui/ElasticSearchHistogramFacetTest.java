@@ -4,11 +4,14 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.facet.FacetBuilders;
+import org.elasticsearch.search.facet.datehistogram.DateHistogramFacet;
+import org.elasticsearch.search.facet.datehistogram.DateHistogramFacetBuilder;
 import org.elasticsearch.search.facet.histogram.HistogramFacet;
-import org.elasticsearch.search.facet.histogram.HistogramFacetBuilder;
-import org.elasticsearch.search.facet.terms.TermsFacet;
-import org.elasticsearch.search.facet.terms.TermsFacetBuilder;
 import org.junit.Test;
 
 public class ElasticSearchHistogramFacetTest {
@@ -18,26 +21,32 @@ public class ElasticSearchHistogramFacetTest {
 		// on startup
 		Client client = new TransportClient().addTransportAddress(new InetSocketTransportAddress("localhost", 9300));		
 		
-		TermsFacetBuilder termsFacetBuilder = FacetBuilders.termsFacet("termsFacet").field("node").size(10);
-		//DateHistogramFacetBuilder dateHistogramFacetBuilder = FacetBuilders.dateHistogramFacet("dateHistogramFacet").field("timestamp").interval("year");
-		HistogramFacetBuilder histogramFacetBuilder = FacetBuilders.histogramFacet("histogramFacet").field("execution_time").interval(100);
+		//TermsFacetBuilder termsFacetBuilder = FacetBuilders.termsFacet("termsFacet").field("node").size(10);
+		DateHistogramFacetBuilder dateHistogramFacetBuilder = FacetBuilders.dateHistogramFacet("dateHistogramFacet").field("timestamp").interval("year");
+		//HistogramFacetBuilder histogramFacetBuilder = FacetBuilders.histogramFacet("histogramFacet").field("execution_time").interval(100);
+		QueryBuilder query = QueryBuilders.boolQuery()
+				.must(QueryBuilders.matchQuery("sla","r9iFXyW4Q4OHMsLyYYaJOQ"));
 		
 		SearchResponse searchresponse = client.prepareSearch()
-				.addFacet(termsFacetBuilder)
-				.addFacet(histogramFacetBuilder)
+				.setQuery(query)
+				.addFacet(dateHistogramFacetBuilder)
+				//.addFacet(histogramFacetBuilder)
 				.execute().actionGet();
 		// assertThat(searchresponse.status(), is(RestStatus.OK));
 		
-		
+		SearchHits hits = searchresponse.getHits();
+		for (SearchHit hit: hits) {
+			System.out.println(hit.field("sla"));
+		}
 		// TERM
-		TermsFacet termsFacet = (TermsFacet) searchresponse.getFacets().facetsAsMap().get("termsFacet");
+		DateHistogramFacet termsFacet = (DateHistogramFacet) searchresponse.getFacets().facetsAsMap().get("dateHistogramFacet");
 		
-		System.out.println("total: " + termsFacet.getTotalCount());
-		System.out.println("other: " + termsFacet.getOtherCount());
-		System.out.println("missing: " + termsFacet.getMissingCount());
+		System.out.println("name: " + termsFacet.getName());
+		System.out.println("type: " + termsFacet.getType());
 		
-		for (TermsFacet.Entry entry : termsFacet) {
-		    System.out.println(entry.getTerm() + ": " + entry.getCount());
+		System.out.println(": " + termsFacet.getEntries().get(0).getCount());
+		for (DateHistogramFacet.Entry entry : termsFacet) {
+		    System.out.println(": " + entry.getCount());
 		}
 		
 		

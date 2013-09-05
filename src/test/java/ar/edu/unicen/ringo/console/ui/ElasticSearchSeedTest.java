@@ -21,13 +21,15 @@ public class ElasticSearchSeedTest {
 	@Test
 	public void test() throws IOException {
 		
+		String[] keys = {"SA_L9I6KSnaK5p_DZDGswA","r9iFXyW4Q4OHMsLyYYaJOQ"};
+		
 		Map<String, String[]> slas = new Hashtable<String, String[]>();
+		
 		String[] sla1 = {"node1","node2","node3"};
-		slas.put("sla1", sla1);
+		slas.put("SA_L9I6KSnaK5p_DZDGswA", sla1);
 		String[] sla2 = {"node4","node5","node6"};
-		slas.put("sla2", sla2);
-		String[] sla3 = {"node7","node8","node9"};
-		slas.put("sla3", sla3);		
+		slas.put("r9iFXyW4Q4OHMsLyYYaJOQ", sla2);
+
 		
 		String[] methods = {"ME","TO","DO"}; 
 		
@@ -39,7 +41,7 @@ public class ElasticSearchSeedTest {
 		Random randomGenerator = new Random();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 		for(int i=0; i<100; i++) {
-			String sla = "sla" + (randomGenerator.nextInt(3) + 1);
+			String sla = keys[randomGenerator.nextInt(2)];
 			String node = slas.get(sla)[randomGenerator.nextInt(3)];
 			String method = methods[randomGenerator.nextInt(3)];
 			

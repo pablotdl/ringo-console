@@ -13,7 +13,7 @@
         </div>
         <!--page title end-->
 
-		<c:forEach items="${facets.iterator()}" var="entry">
+		<c:forEach items="${slas}" var="sla">
 
              
              <!-- info-box -->
@@ -22,20 +22,20 @@
                   <div class="span4">
                     <div class="stats-box-title">Usage</div>
                     <div class="stats-box-all-info"><img src="images/icon/icon_vizitors_stats.png" alt=""> <fmt:formatNumber type="number" 
-            maxFractionDigits="2" value="${entry.getTotal()}" /></div>
+            maxFractionDigits="2" value="${histograms.get(sla.getId()).getTotal()}" /></div>
                     <div class="wrap-chart"><div id="visitor-stat" class="chart"></div></div>
                   </div>
                   
                   <div class="span4">
                     <div class="stats-box-title">Events</div>
-                    <div class="stats-box-all-info"><img src="images/icon/icon_like_stats.png" alt=""> ${entry.getCount()}</div>
+                    <div class="stats-box-all-info"><img src="images/icon/icon_like_stats.png" alt=""> ${histograms.get(sla.getId()).getCount()}</div>
                     <div class="wrap-chart"><div id="order-stat" class="chart"></div></div>
                   </div>
                   
                   <div class="span4">
                     <div class="stats-box-title">Response Time</div>
                     <div class="stats-box-all-info"><img src="images/icon/icon_orders_stats.png" alt=""> <fmt:formatNumber type="number" 
-            maxFractionDigits="2" value="${entry.getMean()}" /> </div>
+            maxFractionDigits="2" value="${histograms.get(sla.getId()).getMean()}" /> </div>
                     <div class="wrap-chart"><div id="user-stat" class="chart"></div></div>
                   </div>
                </div>
@@ -46,11 +46,11 @@
 	                    <p class="date-title">SLA</p>
 	                </div>
 	                <div class="data">
-	                    <p class="date-figures">${entry.getMin()}</p>
+	                    <p class="date-figures">${histograms.get(sla.getId()).getMin()}</p>
 	                    <p class="date-title">Min</p>
 	                </div>
 	                <div class="data">
-	                    <p class="date-figures">${entry.getMax()}</p>
+	                    <p class="date-figures">${histograms.get(sla.getId()).getMax()}</p>
 	                    <p class="date-title">Max</p>
 	                </div>
 	                <div class="data data-last">
