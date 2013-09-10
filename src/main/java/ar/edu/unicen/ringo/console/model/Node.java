@@ -6,21 +6,39 @@ package ar.edu.unicen.ringo.console.model;
  */
 public class Node implements Identificable {
 
+    private String id;
+    private String name;
+    private String sla;
+
     @Override
     public String getId() {
-        // TODO Auto-generated method stub
-        return null;
+        return id;
     }
 
     @Override
     public void setId(String id) {
-        // TODO Auto-generated method stub
-        
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSla(String sla) {
+        this.sla = sla;
+    }
+
+    public String getSla() {
+        return this.sla;
     }
 
     public void loadFrom(Node node) {
-        // TODO Auto-generated method stub
-        
+        this.id = node.id;
+        this.name = node.name;
     }
 
 }
