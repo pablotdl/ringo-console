@@ -64,10 +64,10 @@ public class AbstractManagementService<T extends Identificable> {
         try {
             T entity = mapper.readValue(source, clazz);
             entity.setId(result.getId());
-            System.out.println("Created SLA");
+            System.out.println("Created entity");
             return entity;
         } catch (IOException e) {
-            System.out.println("Error creating sla");
+            System.out.println("Error creating entity");
             e.printStackTrace();
             return null;
         }
