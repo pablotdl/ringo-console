@@ -39,6 +39,7 @@ public class Node implements Identificable {
     public void loadFrom(Node node) {
         this.id = node.id;
         this.name = node.name;
+        this.sla = node.sla;
     }
 
 }

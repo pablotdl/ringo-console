@@ -90,9 +90,10 @@ public class ManagementController {
 
     @RequestMapping(value = "/node/{id}", method = RequestMethod.GET)
     public String editNode(@ModelAttribute("node") Node node,
-            @PathVariable("id") String id) {
+            @PathVariable("id") String id, ModelMap map) {
         node.loadFrom(nodeManagementService.get(id));
         System.out.println("About to render form");
+        map.put("slas", this.slaManagementService.list());
         return "node.form";
     }
 

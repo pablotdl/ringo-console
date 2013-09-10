@@ -19,7 +19,11 @@
                          <select id="sla" name="sla" class="chzn-select chosen_select"  >
                             <option value=""></option>
                             <c:forEach items="${slas}" var="sla" >
-                                <option value="${sla.id}">${sla.name}</option>
+                                <option 
+                                <c:if test="${sla.id == node.sla}">
+                                 selected
+                                </c:if>
+                                value="${sla.id}">${sla.name}</option>
                             </c:forEach>
                           </select>  
                         </div>
