@@ -3,6 +3,7 @@ package ar.edu.unicen.ringo.console.ui;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -81,8 +82,9 @@ public class ManagementController {
     }
 
     @RequestMapping(value = "/node/new", method = RequestMethod.GET)
-    public String newNode(@ModelAttribute("node") Node node) {
+    public String newNode(@ModelAttribute("node") Node node, ModelMap map) {
         System.out.println("Entering new Node form");
+        map.put("slas", this.slaManagementService.list());
         return "node.form";
     }
 

@@ -1,13 +1,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <div class="btn-group">
-                  <button class="btn" onclick="location.href = './sla/new'">New SLA</button>
+                  <button class="btn" onclick="location.href = './<tiles:insertAttribute name="uri" />/new'">New <tiles:insertAttribute name="entity" ignore="true"/></button>
                 </div>              
 
 <div class="grid">
               <div class="grid-title">
                <div class="pull-left">
                <div class="icon-title"></div>
-                  <span>SLA listing</span> 
+                  <span><tiles:insertAttribute name="entity" ignore="true"/> listing</span> 
                   <div class="clearfix"></div>
                </div>
                <div class="pull-right"> 
@@ -45,7 +46,7 @@
 			"bProcessing" : true,
 			"bDeferRender": true,
 			"bAutoWidth": true,
-			"sAjaxSource" : "./sla/list",
+			"sAjaxSource" : "./<tiles:insertAttribute name="uri" />/list",
 			"aoColumns" : [{"mData": null,
                 "sName": "Select",
                 "bSearchable": false,
@@ -66,14 +67,14 @@
                 "bSearchable": false,
                 "bSortable": false,
                 "mRender": function ( data, type, full ) {
-					return "<a href='#'><img src='<c:url value="/images/icon/table_view.png" />' alt=''></a> <a href='./sla/" + full.id + "'><img src='<c:url value="/images/icon/table_edit.png" />' alt=''></a> <a href='#' onclick='return doDelete(\"" + full.id + "\")'><img src='<c:url value="/images/icon/table_del.png" />' alt=''></a>";
+					return "<a href='#'><img src='<c:url value="/images/icon/table_view.png" />' alt=''></a> <a href='./<tiles:insertAttribute name="uri" />/" + full.id + "'><img src='<c:url value="/images/icon/table_edit.png" />' alt=''></a> <a href='#' onclick='return doDelete(\"" + full.id + "\")'><img src='<c:url value="/images/icon/table_del.png" />' alt=''></a>";
 				}
 			} ]
 		});
 	});
     function doDelete(id) {
         $.ajax({
-            url: "./sla/" + id,
+            url: "./<tiles:insertAttribute name="uri" />/" + id,
             type: 'DELETE',
             success: function (result) {
             	oTable.fnDraw();
