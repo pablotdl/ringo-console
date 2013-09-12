@@ -6,8 +6,6 @@ import java.util.List;
 
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
-import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.facet.FacetBuilders;
@@ -29,10 +27,11 @@ public class DashboardController {
 	@Autowired
 	private SlaManagementService service;
 	
+	@Autowired
+	private Client client;	
+	
 	@RequestMapping("/")
 	public String index(ModelMap model, @RequestParam(value="period", defaultValue="hour") String period) {
-		
-		Client client = new TransportClient().addTransportAddress(new InetSocketTransportAddress("localhost", 9300));
 		
 		List<Sla> slas = service.list();
 		
@@ -42,8 +41,9 @@ public class DashboardController {
 		String period_from = sdf.format(from);
 		String period_to   = sdf.format(to);
 		
-		HashMap<String, DateHistogramFacet.Entry> histograms = new HashMap<String, DateHistogramFacet.Entry>();
+		HashMap<String, DateHistogramFacet> histograms = new HashMap<String, DateHistogramFacet>();
 		for(Sla sla : slas) {
+			System.out.println("sla: " + sla.getId());
 			// Facet by Period 
 			DateHistogramFacetBuilder facet = FacetBuilders.dateHistogramFacet("histogram")
 						.keyField("timestamp")
@@ -56,17 +56,16 @@ public class DashboardController {
 					//.must(QueryBuilders.rangeQuery("timestamp").from(period_from).to(period_to));
 			
 			// Client Search
-			SearchResponse searchresponse = client.prepareSearch("")
+			SearchResponse searchresponse = client.prepareSearch("agent").setTypes("invocation")
 					.setQuery(query)
 					.addFacet(facet)
 					.execute().actionGet();
 			
 			// Get Histogram for SLA
 			DateHistogramFacet histogram = (DateHistogramFacet) searchresponse.getFacets().facetsAsMap().get("histogram");
-			System.out.println("total: " + histogram.getEntries().get(0).getTotal());
-			if ( histogram.getEntries().size() > 0 ) histograms.put(sla.getId(), histogram.getEntries().get(0));
+			histograms.put(sla.getId(), histogram);
 		}
-		
+				
 		model.addAttribute("period", period);
 		model.addAttribute("slas", slas);
 		model.addAttribute("histograms", histograms);

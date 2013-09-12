@@ -18,6 +18,9 @@
 <link rel="shortcut icon" href="<c:url value="/favicon.ico" />">
 <script src="<c:url value="/js/jquery.min.js" />"></script>
 <script src="<c:url value="/js/jquery.dataTables.min.js" />"></script>
+
+<tiles:insertAttribute name="jsload" />
+
 </head>
 
 <body>
@@ -69,8 +72,6 @@
 
 	</div>
 	<!--/#wrapper-->
-
-	<tiles:insertAttribute name="jsload" />
 	
 </body>
 </html>

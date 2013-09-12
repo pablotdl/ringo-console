@@ -21,14 +21,14 @@ public class ElasticSearchSeedTest {
 	@Test
 	public void test() throws IOException {
 		
-		String[] keys = {"SA_L9I6KSnaK5p_DZDGswA","r9iFXyW4Q4OHMsLyYYaJOQ"};
+		String[] keys = {"kpEFXSbtSymPMTSdSfHMhA","IZEsDD1lRGKjKUvEX5OHJg"};
 		
 		Map<String, String[]> slas = new Hashtable<String, String[]>();
 		
 		String[] sla1 = {"node1","node2","node3"};
-		slas.put("SA_L9I6KSnaK5p_DZDGswA", sla1);
+		slas.put("kpEFXSbtSymPMTSdSfHMhA", sla1);
 		String[] sla2 = {"node4","node5","node6"};
-		slas.put("r9iFXyW4Q4OHMsLyYYaJOQ", sla2);
+		slas.put("IZEsDD1lRGKjKUvEX5OHJg", sla2);
 
 		
 		String[] methods = {"ME","TO","DO"}; 
