@@ -35,6 +35,13 @@ public class ElasticSearchSeedTest {
 		
 		// on startup
 		Client client = nodeBuilder().node().client();
+        client.prepareIndex("agent", "sla")
+                .setSource(jsonBuilder().startObject().field("name", "Sla 1"))
+                .setId("kpEFXSbtSymPMTSdSfHMhA").execute().actionGet();
+
+        client.prepareIndex("agent", "sla")
+        .setSource(jsonBuilder().startObject().field("name", "Sla 2"))
+        .setId("IZEsDD1lRGKjKUvEX5OHJg").execute().actionGet();
 		
 		BulkRequestBuilder bulkRequest = client.prepareBulk();
 
