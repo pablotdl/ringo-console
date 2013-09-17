@@ -10,8 +10,9 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.facet.FacetBuilders;
 import org.elasticsearch.search.facet.datehistogram.DateHistogramFacet;
-import org.elasticsearch.search.facet.datehistogram.DateHistogramFacet.Entry;
 import org.elasticsearch.search.facet.datehistogram.DateHistogramFacetBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -23,6 +24,9 @@ import ar.edu.unicen.ringo.console.service.SlaManagementService;
 
 @Controller
 public class DashboardController {
+
+    private static final Logger logger = LoggerFactory
+            .getLogger(DashboardController.class);
 
 	@Autowired
 	private SlaManagementService service;
@@ -43,7 +47,7 @@ public class DashboardController {
 		
 		HashMap<String, DateHistogramFacet> histograms = new HashMap<String, DateHistogramFacet>();
 		for(Sla sla : slas) {
-			System.out.println("sla: " + sla.getId());
+			logger.debug("Sla: {}", sla.getId());
 			// Facet by Period 
 			DateHistogramFacetBuilder facet = FacetBuilders.dateHistogramFacet("histogram")
 						.keyField("timestamp")

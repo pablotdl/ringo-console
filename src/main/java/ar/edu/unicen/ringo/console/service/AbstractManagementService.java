@@ -9,9 +9,11 @@ import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
-import org.elasticsearch.common.io.stream.OutputStreamStreamOutput;
+import org.elasticsearch.common.io.stream.BytesStreamOutput;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ar.edu.unicen.ringo.console.model.Identificable;
@@ -24,6 +26,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @author psaavedra
  */
 public class AbstractManagementService<T extends Identificable> {
+
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
     @Autowired
     private Client client;
 
@@ -41,6 +46,12 @@ public class AbstractManagementService<T extends Identificable> {
         this.clazz = clazz;
     }
 
+    /**
+     * Saves an entity into elastic search.
+     *
+     * @param object
+     *            The entity to save.
+     */
     public void save(T object) {
         try {
             IndexResponse response = client.prepareIndex(index, entity)
@@ -50,9 +61,14 @@ public class AbstractManagementService<T extends Identificable> {
             //Force refresh.
             object.setId(response.getId());
             client.admin().indices().prepareRefresh(index).execute().actionGet();
-            response.writeTo(new OutputStreamStreamOutput(System.out));
+            if (logger.isDebugEnabled()) {
+                BytesStreamOutput out = new BytesStreamOutput(1024 * 1024);
+                response.writeTo(out);
+                logger.debug("Obtained response: {}", new String(out.bytes()
+                        .array()));
+            }
         } catch (ElasticSearchException | IOException e) {
-            e.printStackTrace();
+            logger.error("Error while saving entity", e);
         }
     }
 
@@ -64,11 +80,10 @@ public class AbstractManagementService<T extends Identificable> {
         try {
             T entity = mapper.readValue(source, clazz);
             entity.setId(result.getId());
-            System.out.println("Created entity");
+            logger.info("Successfully obtained entity with id [{}]", id);
             return entity;
         } catch (IOException e) {
-            System.out.println("Error creating entity");
-            e.printStackTrace();
+            logger.error("Error retrieving entity with id " + id, e);
             return null;
         }
     }
@@ -88,15 +103,16 @@ public class AbstractManagementService<T extends Identificable> {
                 result.setId(hit.getId());
                 results.add(result);
             } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                logger.error("Error listing entities of type " + this.entity, e);
             }
         }
         return results;
     }
 
     public void delete(String id) {
+        logger.info("Deleting entity with id {}", id);
         client.prepareDelete(index, entity, id).execute().actionGet();
         client.admin().indices().prepareRefresh(index).execute().actionGet();
+        logger.info("Entity with id {} deleted successfully", id);
     }
 }

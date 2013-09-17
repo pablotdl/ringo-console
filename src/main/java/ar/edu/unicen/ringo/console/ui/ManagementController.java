@@ -1,5 +1,7 @@
 package ar.edu.unicen.ringo.console.ui;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,9 @@ import ar.edu.unicen.ringo.console.service.SlaManagementService;
 @RequestMapping("/admin")
 public class ManagementController {
 
+    private static final Logger logger = LoggerFactory
+            .getLogger(ManagementController.class);
+
     @Autowired
     private SlaManagementService slaManagementService;
 
@@ -32,7 +37,7 @@ public class ManagementController {
 
     @RequestMapping(value = "/sla/new", method = RequestMethod.GET)
     public String newSla(@ModelAttribute("sla") Sla sla) {
-        System.out.println("Entering new SLA form");
+        logger.info("Entering new SLA form");
         return "sla.form";
     }
 
@@ -40,7 +45,7 @@ public class ManagementController {
     public String editSla(@ModelAttribute("sla") Sla sla,
             @PathVariable("id") String id) {
         sla.loadFrom(slaManagementService.get(id));
-        System.out.println("About to render form");
+        logger.info("About to render form");
         return "sla.form";
     }
 
