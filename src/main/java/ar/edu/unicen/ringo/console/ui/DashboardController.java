@@ -52,8 +52,8 @@ public class DashboardController {
 			
 			// Query Filters: SLA & Range by Period 
 			QueryBuilder query = QueryBuilders.boolQuery()
-					.must(QueryBuilders.matchQuery("sla", sla.getId()));
-					//.must(QueryBuilders.rangeQuery("timestamp").from(period_from).to(period_to));
+					.must(QueryBuilders.matchQuery("sla", sla.getId()))
+					.must(QueryBuilders.rangeQuery("timestamp").from(period_from).to(period_to));
 			
 			// Client Search
 			SearchResponse searchresponse = client.prepareSearch("agent").setTypes("invocation")
