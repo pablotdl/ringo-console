@@ -48,6 +48,16 @@ public class ManagementController {
         logger.info("About to render form");
         return "sla.form";
     }
+    
+    @RequestMapping(value = "/sla/{id}", method = RequestMethod.POST)
+    public String update(@ModelAttribute("sla") Sla sla,
+            @PathVariable("id") String id) {
+    	sla.setId(id);
+        slaManagementService.save(sla);
+        System.out.println("Updated an SLA: " + sla);
+        return "redirect:/admin/sla";
+    }
+    
 
     @RequestMapping(value = "/sla/new", method = RequestMethod.POST)
     public String create(@ModelAttribute("sla") Sla sla) {

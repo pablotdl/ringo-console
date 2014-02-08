@@ -810,6 +810,10 @@ div.profile-box {
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fffafafa', endColorstr='#ffeaeaea', GradientType=0);
 }
 
+.pagetitle .btn.btn-primary{
+	color: #ffffff;
+}
+
 /* 5.b Info Box ***************************/
 .info-box {
 	background:#ffffff;

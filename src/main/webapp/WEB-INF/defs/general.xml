@@ -34,6 +34,8 @@
 
     <definition name="sla.form" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/pages/sla/form.jsp" />
+        <put-attribute name="entity" type="string" value="SLA" cascade="true" />
+        <put-attribute name="uri" value="sla" cascade="true" />
     </definition>
 
     <definition name="node.list" extends="base.definition">

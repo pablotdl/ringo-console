@@ -21,7 +21,8 @@ public class Sla implements Identificable {
     @XmlElement
     private String description;
     @XmlElement
-    private boolean enabled = true;
+    private boolean enabled = false;
+    
     public String getName() {
         return name;
     }
