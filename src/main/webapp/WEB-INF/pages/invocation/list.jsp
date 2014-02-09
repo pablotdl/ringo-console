@@ -30,9 +30,11 @@
 			<thead>
 				<tr>
 					<th>Id</th>
-					<th>Name</th>
-					<th class="hidden-mobile">Description</th>
-					<th class="hidden-mobile">Enabled</th>
+					<th class="hidden-mobile">Sla</th>
+					<th class="hidden-mobile">Node</th>
+					<th>Method</th>
+					<th>Execution Time</th>									
+					<th class="hidden-mobile">Timestamp</th>
 					<th>Actions</th>
 				</tr>
 			</thead>
@@ -49,6 +51,14 @@
 
 <script type="text/javascript">
 
+	var slas = {};
+	<c:forEach items="${slas}" var="sla"> slas["${sla.id}"] = {name: "${sla.name}"};
+	</c:forEach>
+
+	var nodes = {};
+	<c:forEach items="${nodes}" var="node"> nodes["${node.id}"] = {name: "${node.name}"};
+	</c:forEach>
+
     var oTable
 	$(document).ready(function() {
 		oTable = $('#sla-table').dataTable({
@@ -59,18 +69,28 @@
 			"sPaginationType": "full_numbers",
 			"sAjaxSource" : "./<tiles:insertAttribute name="uri" />/list",
 			"aoColumns" : [{
-				"mDataProp": "id"
+				"mDataProp": "id",
+                "sWidth": "200px"
+			}, {
+				"sClass": "hidden-mobile",
+				"mDataProp" : "sla",
+				"fnRender": function ( object ) {
+					return slas[object.aData.sla].name;
+				}
+			}, {
+				"sClass": "hidden-mobile",
+				"mDataProp" : "node",
+				"fnRender": function ( object ) {
+					return nodes[object.aData.node].name;
+				}
             }, {
-				"mDataProp" : "name"
-			}, {
-				"sClass": "hidden-mobile",
-				"mDataProp" : "description"
-			}, {
-				"sClass": "hidden-mobile",
-				"mDataProp" : "enabled",
-                "fnRender": function ( object ) {
-                	if ( object.aData.enabled ) return  "<i class='icon-ok'></i>";
-                	return "";
+				"mDataProp" : "method"
+            }, {
+				"mDataProp" : "execution_time"
+            }, {
+				"mDataProp" : "timestamp",
+				"fnRender": function ( object ) {
+					return new Date(object.aData.timestamp).toISOString();
 				}
 			}, {
 				"mDataProp" : "id",
@@ -79,7 +99,7 @@
                 "bSearchable": false,
                 "bSortable": false,
                 "bUseRendered" : false,
-                "sWidth": "30px",
+                "sWidth": "60px",
                 "fnRender": function ( object ) {
                 	var edit = "<a href='./<tiles:insertAttribute name="uri" />/" + object.aData.id + "'><img src='<c:url value="/images/icon/table_edit.png" />' alt=''></a> ";
                 	var remove = "<a href='#' onclick='return doDelete(this, \"" + object.aData.id + "\")'><img src='<c:url value="/images/icon/table_del.png" />' alt=''></a>";

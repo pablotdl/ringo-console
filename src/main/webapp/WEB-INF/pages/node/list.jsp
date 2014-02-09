@@ -48,21 +48,30 @@
 
 <script type="text/javascript">
 
+	var slas = {};
+	<c:forEach items="${slas}" var="sla"> slas["${sla.id}"] = {name: "${sla.name}"};
+	</c:forEach>
+
     var oTable
 	$(document).ready(function() {
 		oTable = $('#sla-table').dataTable({
+			"iDisplayLength": 10,
 			"bProcessing" : true,
 			"bDeferRender": true,
 			"bAutoWidth": true,
 			"sPaginationType": "full_numbers",
 			"sAjaxSource" : "./<tiles:insertAttribute name="uri" />/list",
 			"aoColumns" : [{
-				"mDataProp": "id"
+				"mDataProp": "id",
+				"sWidth": "200px",
             }, {
 				"mDataProp" : "name"
 			}, {
 				"sClass": "hidden-mobile",
-				"mDataProp" : "sla"
+				"mDataProp" : "sla",
+				"fnRender": function ( object ) {
+					return slas[object.aData.sla].name;
+				}
 			}, {
 				"mDataProp" : "id",
 				"sName": "Actions",
@@ -70,7 +79,7 @@
                 "bSearchable": false,
                 "bSortable": false,
                 "bUseRendered" : false,
-                "sWidth": "30px",
+                "sWidth": "60px",
                 "fnRender": function ( object ) {
                 	var edit = "<a href='./<tiles:insertAttribute name="uri" />/" + object.aData.id + "'><img src='<c:url value="/images/icon/table_edit.png" />' alt=''></a> ";
                 	var remove = "<a href='#' onclick='return doDelete(this, \"" + object.aData.id + "\")'><img src='<c:url value="/images/icon/table_del.png" />' alt=''></a>";

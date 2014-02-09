@@ -10,6 +10,7 @@
         <submenu>
             <item name="sla" label="SLA" styleClass="icon-picture" href="/admin/sla" />
             <item name="node" label="Nodes" styleClass="icon-picture" href="/admin/node" />
+            <item name="invocation" label="Invocations" styleClass="icon-picture" href="/admin/invocation" />
         </submenu>
     </item>
   </items>
