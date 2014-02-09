@@ -37,7 +37,6 @@ public class ManagementController {
 
     @RequestMapping(value = "/sla/new", method = RequestMethod.GET)
     public String newSla(@ModelAttribute("sla") Sla sla) {
-        logger.info("Entering new SLA form");
         return "sla.form";
     }
 
@@ -45,7 +44,6 @@ public class ManagementController {
     public String editSla(@ModelAttribute("sla") Sla sla,
             @PathVariable("id") String id) {
         sla.loadFrom(slaManagementService.get(id));
-        logger.info("About to render form");
         return "sla.form";
     }
     
@@ -54,7 +52,6 @@ public class ManagementController {
             @PathVariable("id") String id) {
     	sla.setId(id);
         slaManagementService.save(sla);
-        System.out.println("Updated an SLA: " + sla);
         return "redirect:/admin/sla";
     }
     
@@ -62,13 +59,11 @@ public class ManagementController {
     @RequestMapping(value = "/sla/new", method = RequestMethod.POST)
     public String create(@ModelAttribute("sla") Sla sla) {
         slaManagementService.save(sla);
-        System.out.println("Saved an SLA: " + sla);
         return "redirect:/admin/sla";
     }
 
     @RequestMapping(value = "/sla", method = RequestMethod.GET)
     public String list() {
-        System.out.println("Showing list page");
         return "sla.list";
     }
 
@@ -82,7 +77,6 @@ public class ManagementController {
     @RequestMapping(value = "/sla/{id}", method = RequestMethod.DELETE)
     public void deleteSla(@PathVariable("id") String id) {
         slaManagementService.delete(id);
-        System.out.println("Deleted SLA " + id);
     }
 
     @RequestMapping(value = "/node", method = RequestMethod.GET)
@@ -98,7 +92,6 @@ public class ManagementController {
 
     @RequestMapping(value = "/node/new", method = RequestMethod.GET)
     public String newNode(@ModelAttribute("node") Node node, ModelMap map) {
-        System.out.println("Entering new Node form");
         map.put("slas", this.slaManagementService.list());
         return "node.form";
     }
@@ -107,7 +100,6 @@ public class ManagementController {
     public String editNode(@ModelAttribute("node") Node node,
             @PathVariable("id") String id, ModelMap map) {
         node.loadFrom(nodeManagementService.get(id));
-        System.out.println("About to render form");
         map.put("slas", this.slaManagementService.list());
         return "node.form";
     }
@@ -115,9 +107,16 @@ public class ManagementController {
     @RequestMapping(value = "/node/new", method = RequestMethod.POST)
     public String create(@ModelAttribute("node") Node node) {
         nodeManagementService.save(node);
-        System.out.println("Saved an SLA: " + node);
         return "redirect:/admin/node";
     }
+    
+    @RequestMapping(value = "/node/{id}", method = RequestMethod.POST)
+    public String update(@ModelAttribute("node") Node node,
+            @PathVariable("id") String id) {
+    	node.setId(id);
+    	nodeManagementService.save(node);
+        return "redirect:/admin/node";
+    }    
 
     @ResponseStatus(value = HttpStatus.NO_CONTENT, reason = "Success")
     @RequestMapping(value = "/node/{id}", method = RequestMethod.DELETE)

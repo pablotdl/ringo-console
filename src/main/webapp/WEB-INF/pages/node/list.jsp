@@ -31,8 +31,7 @@
 				<tr>
 					<th>Id</th>
 					<th>Name</th>
-					<th class="hidden-mobile">Description</th>
-					<th class="hidden-mobile">Enabled</th>
+					<th class="hidden-mobile">Sla</th>
 					<th>Actions</th>
 				</tr>
 			</thead>
@@ -63,14 +62,7 @@
 				"mDataProp" : "name"
 			}, {
 				"sClass": "hidden-mobile",
-				"mDataProp" : "description"
-			}, {
-				"sClass": "hidden-mobile",
-				"mDataProp" : "enabled",
-                "fnRender": function ( object ) {
-                	if ( object.aData.enabled ) return  "<i class='icon-ok'></i>";
-                	return "";
-				}
+				"mDataProp" : "sla"
 			}, {
 				"mDataProp" : "id",
 				"sName": "Actions",

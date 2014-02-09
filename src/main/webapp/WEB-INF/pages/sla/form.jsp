@@ -41,10 +41,9 @@
 			<div class="formRow">
 				<div class="formRight">
 					<p>
-						<c:if test="${sla.enabled}">
-							<c:set var="enabled" value="checked" />
-						</c:if> 
-						<input type="checkbox" id="enabled" name="enabled" ${enabled} /> 
+						<input type="checkbox" id="enabled" name="enabled"  
+							<c:if test="${sla.enabled}">checked</c:if> 
+						/> 
 						<label for="enabled"><span> </span> Enabled</label>
 					</p>
 				</div>
@@ -52,7 +51,7 @@
 			<div class="formRow">	
 				<div class="formRight">	
 					<button type="submit" class="btn btn-primary metro">Save</button>
-					<button type="button" class="btn metro" onclick="location.href = '<c:url value="/admin/sla" />'" >Cancel</button>
+					<button type="button" class="btn metro" onclick="location.href = '<c:url value="/admin/" /><tiles:insertAttribute name="uri" />'" >Cancel</button>
 				</div>
 			</div>
 			<div class="clearfix"></div>   

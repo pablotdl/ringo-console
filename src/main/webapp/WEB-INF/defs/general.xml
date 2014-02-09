@@ -39,13 +39,15 @@
     </definition>
 
     <definition name="node.list" extends="base.definition">
-        <put-attribute name="body" value="/WEB-INF/pages/sla/list.jsp" />
+        <put-attribute name="body" value="/WEB-INF/pages/node/list.jsp" />
         <put-attribute name="entity" value="Node" cascade="true" />
         <put-attribute name="uri" value="node" cascade="true" />
     </definition>
 
     <definition name="node.form" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/pages/node/form.jsp" />
+        <put-attribute name="entity" type="string" value="Node" cascade="true" />
+        <put-attribute name="uri" value="node" cascade="true" />
     </definition>
  
 </tiles-definitions>
