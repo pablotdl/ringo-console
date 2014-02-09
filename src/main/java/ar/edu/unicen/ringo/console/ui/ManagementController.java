@@ -2,6 +2,8 @@ package ar.edu.unicen.ringo.console.ui;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import ar.edu.unicen.ringo.console.model.Generate;
 import ar.edu.unicen.ringo.console.model.Invocation;
 import ar.edu.unicen.ringo.console.model.Node;
 import ar.edu.unicen.ringo.console.model.Sla;
@@ -168,6 +171,11 @@ public class ManagementController {
         map.put("nodes", this.nodeManagementService.list());
         return "invocation.form";
     }
+    
+    @RequestMapping(value = "/invocation/generate", method = RequestMethod.GET)
+    public String newInvocation(@ModelAttribute("generate") Generate generate) {
+        return "invocation.generate";
+    }    
 
     @RequestMapping(value = "/invocation/{id}", method = RequestMethod.GET)
     public String editInvocation(@ModelAttribute("invocation") Invocation invocation,
@@ -183,6 +191,25 @@ public class ManagementController {
     	invocationManagementService.save(invocation);
         return "redirect:/admin/invocation";
     }
+    
+    @RequestMapping(value = "/invocation/generate", method = RequestMethod.POST)
+    public String create(@ModelAttribute("generate") Generate generate) {
+    	Random randomGenerator = new Random();    	
+    	List<Sla> slas = this.slaManagementService.list();
+    	List<Node> nodes = this.nodeManagementService.list();
+
+    	for(int i = 0; i < generate.getInvocations(); i++) {
+    		Invocation invocation = new Invocation();
+    		invocation.setMethod(generate.getMethod());
+    		invocation.setExecution_time(randomGenerator.nextInt(1000));
+    		invocation.setNode(nodes.get(randomGenerator.nextInt(nodes.size())).getId());
+    		invocation.setSla(slas.get(randomGenerator.nextInt(slas.size())).getId());
+    		invocation.setTimestamp(generate.getTimestamp());
+    		
+    		invocationManagementService.save(invocation);
+    	}
+        return "redirect:/admin/invocation";
+    }    
     
     @RequestMapping(value = "/invocation/{id}", method = RequestMethod.POST)
     public String update(@ModelAttribute("invocation") Invocation invocation,

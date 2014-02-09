@@ -7,6 +7,9 @@
 	<div class="btn-group">
 		<button class="btn btn-primary metro" onclick="location.href = './<tiles:insertAttribute name="uri" />/new'">New</button>
 	</div>
+	<div class="btn-group" style="margin-right: 5px">
+		<button class="btn metro" onclick="location.href = './<tiles:insertAttribute name="uri" />/generate'">Generate</button>
+	</div>		
 	<div class="clearfix"></div>
 </div>
 <!--page title end-->

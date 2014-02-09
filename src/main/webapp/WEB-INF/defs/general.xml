@@ -56,6 +56,12 @@
         <put-attribute name="uri" value="invocation" cascade="true" />
     </definition>
 
+    <definition name="invocation.generate" extends="base.definition">
+        <put-attribute name="body" value="/WEB-INF/pages/invocation/generate.jsp" />
+        <put-attribute name="entity" type="string" value="Invocation" cascade="true" />
+        <put-attribute name="uri" value="invocation" cascade="true" />
+    </definition>    
+    
     <definition name="invocation.form" extends="base.definition">
         <put-attribute name="body" value="/WEB-INF/pages/invocation/form.jsp" />
         <put-attribute name="entity" type="string" value="Invocation" cascade="true" />
