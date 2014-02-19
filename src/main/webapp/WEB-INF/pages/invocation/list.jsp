@@ -65,6 +65,7 @@
     var oTable
 	$(document).ready(function() {
 		oTable = $('#sla-table').dataTable({
+			"iDisplayLength": 0,
 			"iDisplayLength": 10,
 			"bProcessing" : true,
 			"bDeferRender": true,

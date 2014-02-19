@@ -824,6 +824,11 @@ div.profile-box {
 	margin-top:40px;
 }
 
+.dashboard-box {
+	margin:10px 0px;
+	color:#5f5f5f;
+}
+
 .stats-box {
 	margin:40px 0px;
 	color:#5f5f5f;

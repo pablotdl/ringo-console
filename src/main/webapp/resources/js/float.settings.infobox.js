@@ -41,16 +41,19 @@ function loadStats(element, data, color) {
         color: color
     }],
 	
+    stack = true,
+	lines = true,
+	steps = false;
+    
     options_lines = {
         series: {
-            lines: {
-                show: true,
-                fill: true
-            },
-            points: {
-                show: true
-            },
-            hoverable: true
+        	stack: stack,
+        	shadowSize: 0,	
+			lines: {
+				show: lines,
+				fill: true,
+				steps: steps
+			},
         },
         grid: {
             backgroundColor: '#FFFFFF',
@@ -58,16 +61,8 @@ function loadStats(element, data, color) {
             borderColor: '#CDCDCD',
             hoverable: true
         },
-        legend: {
-            show: false
-        },
         xaxis: {
-            mode: "categories",
-            tickLength: 0,
-			 position: "bottom",
-        },
-        yaxis: {
-           show:false
+            show: false
         }
 
     };
@@ -76,7 +71,26 @@ function loadStats(element, data, color) {
     //$.plot(visitor, data_visitor, options_lines);
     //$.plot(order, data_order, options_lines);
     //$.plot(user, data_user, options_lines);
-    $.plot(element, data_conf, options_lines);
+    $.plot(element, data, {
+		series: {
+			shadowSize: 0,
+			stack: stack,
+			lines: {
+				show: lines,
+				fill: true,
+				steps: steps
+			}
+		},
+        grid: {
+            backgroundColor: '#FFFFFF',
+            borderWidth: 0,
+            borderColor: '#CDCDCD',
+            hoverable: true
+        },	
+        xaxis: {
+            show: false
+        }        
+	});
 
 
     var previousPoint = null;

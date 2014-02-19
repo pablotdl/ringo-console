@@ -12,6 +12,7 @@
 <script src="<c:url value="/js/jquery.flot.pie.js" />"></script>
 <script src="<c:url value="/js/jquery.flot.orderBars.js" />"></script>
 <script src="<c:url value="/js/jquery.flot.resize.js" />"></script>
+<script src="<c:url value="/js/jquery.flot.stack.js" />"></script>
 <script src="<c:url value="/js/jquery.flot.categories.js" />"></script>
 <script src="<c:url value="/js/graphtable.js" />"></script>
 <script src="<c:url value="/js/fullcalendar.min.js" />"></script>

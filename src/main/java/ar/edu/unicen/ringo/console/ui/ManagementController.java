@@ -28,6 +28,7 @@ import ar.edu.unicen.ringo.console.model.Sla;
 import ar.edu.unicen.ringo.console.service.InvocationManagementService;
 import ar.edu.unicen.ringo.console.service.NodeManagementService;
 import ar.edu.unicen.ringo.console.service.SlaManagementService;
+import ar.edu.unicen.ringo.console.ui.wrapper.ListWrapper;
 
 /**
  * Controller that handles the CRUD operations related to SLAs and nodes.

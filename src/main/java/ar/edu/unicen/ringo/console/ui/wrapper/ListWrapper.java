@@ -1,4 +1,4 @@
-package ar.edu.unicen.ringo.console.ui;
+package ar.edu.unicen.ringo.console.ui.wrapper;
 
 import java.util.List;
 

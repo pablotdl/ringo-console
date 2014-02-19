@@ -1,5 +1,6 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <!--page title-->
 <div class="pagetitle">
@@ -25,17 +26,17 @@
 		<div class="clearfix"></div>
 	</div>
 	<div class="grid-content">
-		<form method="post">
+		<form:form method="post" commandName="sla">
 			<div class="formRow">
 				<label>Name: </label>
 				<div class="formRight">
-					<input type="text" id="name" name="name" class="span input" placeholder="Name..." value="${sla.name}" />			
+					<form:input path="name"  class="span input" />			
 				</div>
 			</div>
 	        <div class="formRow">
 	               <label>Description: </label>
 	               <div class="formRight">
-	                   <textarea  class="span input same-height-1" id="description" name="description" rows="3">${sla.description}</textarea>
+	               		<form:textarea path="description" rows="5" class="span input same-height-1" />
 	               </div>
 	        </div>
 			<div class="formRow">
@@ -55,6 +56,6 @@
 				</div>
 			</div>
 			<div class="clearfix"></div>   
-		</form>
+		</form:form>
 	</div>
 </div>

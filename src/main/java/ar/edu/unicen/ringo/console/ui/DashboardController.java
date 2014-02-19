@@ -1,6 +1,7 @@
 package ar.edu.unicen.ringo.console.ui;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,10 +18,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import ar.edu.unicen.ringo.console.model.Sla;
 import ar.edu.unicen.ringo.console.service.SlaManagementService;
+import ar.edu.unicen.ringo.console.ui.dto.FlotData;
 
 @Controller
 public class DashboardController {
@@ -40,10 +44,10 @@ public class DashboardController {
 		List<Sla> slas = service.list();
 		
 		long to = System.currentTimeMillis();
-		long from = to - millisecondsForPeriod(period,7);
+		long from = to - millisecondsForPeriod(period,27);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-		String period_from = sdf.format(from);
-		String period_to   = sdf.format(to);
+		String period_from = String.valueOf(from); //sdf.format(from);
+		String period_to   = String.valueOf(to); //sdf.format(to);
 		
 		HashMap<String, DateHistogramFacet> histograms = new HashMap<String, DateHistogramFacet>();
 		for(Sla sla : slas) {
@@ -70,12 +74,35 @@ public class DashboardController {
 			histograms.put(sla.getId(), histogram);
 		}
 				
+		
+		
 		model.addAttribute("period", period);
 		model.addAttribute("slas", slas);
 		model.addAttribute("histograms", histograms);
 		return "index";
  
 	}
+	
+    @ResponseBody
+    @RequestMapping(value = "/data", method = RequestMethod.GET)	
+    public List<FlotData> data(@RequestParam(value="period", defaultValue="hour") String period) {
+    	List<FlotData> data = new ArrayList<FlotData>();
+    	FlotData fd_1 = new FlotData();
+    	List<int[]> fd_1_d = new ArrayList<int[]>();
+    	int[] list = {1,2};
+    	
+    	fd_1.setLabel("jeronimo");
+    	fd_1.setData(fd_1_d);
+    	fd_1_d.add(list);
+
+    	
+    	FlotData fd_2 = new FlotData();
+    	fd_2.setLabel("andres");
+    	
+    	data.add(fd_1);
+    	data.add(fd_2);
+    	return data;
+    }
 	
 	private long millisecondsForPeriod(String period, long range) {
 		long base = 3600 * 1000; // 1 hour
