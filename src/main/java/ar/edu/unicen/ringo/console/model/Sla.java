@@ -22,6 +22,8 @@ public class Sla implements Identificable {
     private String description;
     @XmlElement
     private boolean enabled = false;
+    @XmlElement
+    private String color;    
     
     public String getName() {
         return name;
@@ -40,8 +42,14 @@ public class Sla implements Identificable {
     }
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
-    }
-    /* (non-Javadoc)
+    }    
+    public String getColor() {
+		return color;
+	}
+	public void setColor(String color) {
+		this.color = color;
+	}
+	/* (non-Javadoc)
      * @see ar.edu.unicen.ringo.console.model.Identificable#getId()
      */
     @Override
@@ -59,7 +67,8 @@ public class Sla implements Identificable {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("Sla [name=").append(name).append(", description=")
-                .append(description).append(", enabled=").append(enabled).append("]");
+                .append(description).append(", enabled=").append(enabled).append(", color=")
+                .append(color).append("]");
         return builder.toString();
     }
 
@@ -68,6 +77,7 @@ public class Sla implements Identificable {
         name = other.name;
         description = other.description;
         enabled = other.enabled;
+        color= other.color;
     }
 
 }

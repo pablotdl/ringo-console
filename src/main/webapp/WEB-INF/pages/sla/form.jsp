@@ -5,8 +5,10 @@
 <!--page title-->
 <div class="pagetitle">
 	<c:set var="id" value="New" />
+	<c:set var="color" value="#FFFFFF" />
 	<c:if test="${sla.id != null}">
 		<c:set var="id" value="${sla.id}" />
+		<c:set var="color" value="${sla.color}" />
 	</c:if> 
 	<h1><tiles:insertAttribute name="entity" ignore="true" />: ${id}</h1>
 	<div class="clearfix"></div>
@@ -49,6 +51,15 @@
 					</p>
 				</div>
 			</div>
+			<div class="formRow">
+				<label>Color: </label>
+				<div class="formRight">
+					<p>
+						<form:input path="color"  style="display: none" />
+					</p>
+					<div id="colorpicker" style></div>
+				</div>
+			</div>			
 			<div class="formRow">	
 				<div class="formRight">	
 					<button type="submit" class="btn btn-primary metro">Save</button>
@@ -59,3 +70,13 @@
 		</form:form>
 	</div>
 </div>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var colorpicker = $('#colorpicker').colorPicker({
+			defaultColor: "${color}", 
+			click: function(color){
+				$('#color').attr("value",color);
+			} 
+		});		
+	});
+</script>

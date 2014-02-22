@@ -30,6 +30,7 @@
 			<thead>
 				<tr>
 					<th>Id</th>
+					<th>Color</th>
 					<th>Name</th>
 					<th class="hidden-mobile">Description</th>
 					<th class="hidden-mobile">Enabled</th>
@@ -61,6 +62,13 @@
 			"aoColumns" : [{
 				"mDataProp": "id"
             }, {
+				"mDataProp" : "color",
+				"sWidth": "30px",
+				"sClass": "colorbox",
+                "fnRender": function ( object ) {
+                	return "<div style=\"background-color: " + object.aData.color + ";\"></div>"
+				}
+			}, {
 				"mDataProp" : "name"
 			}, {
 				"sClass": "hidden-mobile",

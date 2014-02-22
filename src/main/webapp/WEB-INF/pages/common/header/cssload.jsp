@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="<c:url value="/css/glisse.css?1.css" />">
 <link rel="stylesheet" href="<c:url value="/css/jquery.jgrowl.css" />">
 <link rel="stylesheet" href="<c:url value="/css/demo_table.css" />">
+<link rel="stylesheet" href="<c:url value="/css/syronex-colorpicker.css" />">
 <link rel="stylesheet"
 	href="<c:url value="/css/jquery.fancybox.css?v=2.1.4" />"
 	media="screen" />

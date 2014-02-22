@@ -1,6 +1,5 @@
 package ar.edu.unicen.ringo.console.ui;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +10,7 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.facet.FacetBuilders;
 import org.elasticsearch.search.facet.datehistogram.DateHistogramFacet;
+import org.elasticsearch.search.facet.datehistogram.DateHistogramFacet.Entry;
 import org.elasticsearch.search.facet.datehistogram.DateHistogramFacetBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,12 +40,43 @@ public class DashboardController {
 	
 	@RequestMapping("/")
 	public String index(ModelMap model, @RequestParam(value="period", defaultValue="hour") String period) {
-		
+		model.addAttribute("period", period);
+		return "index"; 
+	}
+	
+    @ResponseBody
+    @RequestMapping(value = "/data", method = RequestMethod.GET)	
+    public List<FlotData> data(@RequestParam(value="period", defaultValue="hour") String period) {
+    	List<Sla> slas = service.list();
+    	
+    	HashMap<String, DateHistogramFacet> data = generateData(period);
+    	
+    	List<FlotData> response = new ArrayList<FlotData>();
+    	for(Sla sla: slas){
+    		FlotData flotdata = new FlotData();
+    		
+    		List<double[]> datalist = new ArrayList<double[]>();
+    		for(Entry entry : data.get(sla.getId()).getEntries()){
+    			double[] list = {entry.getTime(), entry.getMean()};
+    			datalist.add(list);
+    		}
+    		
+    		flotdata.setLabel(sla.getName());
+    		flotdata.setColor(sla.getColor());
+    		flotdata.setData(datalist);
+    		
+    		response.add(flotdata);
+    	}
+
+    	return response;
+    }
+	
+    private HashMap<String, DateHistogramFacet> generateData(String period) {
 		List<Sla> slas = service.list();
 		
 		long to = System.currentTimeMillis();
-		long from = to - millisecondsForPeriod(period,27);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+		long from = to - millisecondsForPeriod(period);
+		//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 		String period_from = String.valueOf(from); //sdf.format(from);
 		String period_to   = String.valueOf(to); //sdf.format(to);
 		
@@ -56,7 +87,7 @@ public class DashboardController {
 			DateHistogramFacetBuilder facet = FacetBuilders.dateHistogramFacet("histogram")
 						.keyField("timestamp")
 						.valueField("execution_time")
-						.interval(period);
+						.interval("1s");
 			
 			// Query Filters: SLA & Range by Period 
 			QueryBuilder query = QueryBuilders.boolQuery()
@@ -73,50 +104,25 @@ public class DashboardController {
 			DateHistogramFacet histogram = (DateHistogramFacet) searchresponse.getFacets().facetsAsMap().get("histogram");
 			histograms.put(sla.getId(), histogram);
 		}
-				
-		
-		
-		model.addAttribute("period", period);
-		model.addAttribute("slas", slas);
-		model.addAttribute("histograms", histograms);
-		return "index";
- 
-	}
-	
-    @ResponseBody
-    @RequestMapping(value = "/data", method = RequestMethod.GET)	
-    public List<FlotData> data(@RequestParam(value="period", defaultValue="hour") String period) {
-    	List<FlotData> data = new ArrayList<FlotData>();
-    	FlotData fd_1 = new FlotData();
-    	List<int[]> fd_1_d = new ArrayList<int[]>();
-    	int[] list = {1,2};
-    	
-    	fd_1.setLabel("jeronimo");
-    	fd_1.setData(fd_1_d);
-    	fd_1_d.add(list);
-
-    	
-    	FlotData fd_2 = new FlotData();
-    	fd_2.setLabel("andres");
-    	
-    	data.add(fd_1);
-    	data.add(fd_2);
-    	return data;
+				    	
+		return histograms;
     }
-	
-	private long millisecondsForPeriod(String period, long range) {
-		long base = 3600 * 1000; // 1 hour
+     
+	private long millisecondsForPeriod(String period) {
+		long base = 1000; // 1 hour
 		
 		long factor;
-		if (period.equals("hour")) {
-			factor = 1; // 1 hour
-		}else if (period.equals("day")) {
-			factor = 24; // 1 day
+		if (period.equals("minute")) {
+			factor = 60; // 1 min
+		} else if (period.equals("hour")) {
+			factor = 3600; // 1 hour
+		} else if (period.equals("day")) {
+			factor = 24 * 3600; // 1 day
 		} else {
-			factor = 7 * 24; // 1 week
+			factor = 7 * 24 * 3600; // 1 week
 		}
 		
-		return range * factor * base;
+		return factor * base;
 	}
 
 }

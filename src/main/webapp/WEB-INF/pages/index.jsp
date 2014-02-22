@@ -5,6 +5,7 @@
         <div class="pagetitle">
            <h1>Dashboard</h1> 
            <div class="btn-group">
+           	 <a href="?period=minute" class="btn <c:if test="${period=='minute'}">active</c:if>">Minute</a>
              <a href="?period=hour" class="btn <c:if test="${period=='hour'}">active</c:if>">Hour</a>
              <a href="?period=day" class="btn <c:if test="${period=='day'}">active</c:if>">Day</a>
              <a href="?period=week" class="btn <c:if test="${period=='week'}">active</c:if>">Week</a>
@@ -43,29 +44,42 @@
          <!-- info-box end -->
              
 		<script type="text/javascript">
-			var data = new Array();
-			var data_sla;
-			<c:forEach var="i" begin="0" end="${slas.size()-1}">
-				<c:set var="sla" value="${slas.get(i)}"/>
-				<c:set var="entries" value="${histograms.get(sla.getId()).getEntries()}"/>
-				
-				<c:if test="${entries.size() > 0}">
-					data_sla = new Array();
-					<c:forEach var="j" begin="0" end="${entries.size()-1}">
-						data_sla[${j}] = ["${entries.get(j).getTime()}", ${entries.get(j).getTotal()}];
-    				</c:forEach>
-    				data[${i}] = {label: "${sla.getName()}", data: data_sla};
-				</c:if>	
-				
-			</c:forEach> 
-			
-			$(document).ready(function() {
-				loadStats($("#visitor-stat"), data, "#1aae1a");
+			$( document ).ready(function() {
+				setInterval(pollData, 1000);
 			});
+			
+			function pollData(){
+				$.ajax({
+					url: "data?period=${period}",
+					type: "GET",
+					dataType: "json",
+					success: onDataReceived
+				});				
+			}
+			
+			function onDataReceived(data) {
+
+				$.plot("#visitor-stat", data, {
+					series: {
+						shadowSize: 0,
+						stack: true,
+						lines: {
+							show: true,
+							fill: true,
+							steps: false
+						}
+					},
+			        grid: {
+			            backgroundColor: '#FFFFFF',
+			            borderWidth: 0,
+			            borderColor: '#CDCDCD',
+			            hoverable: true
+			        },	
+			        xaxis: {
+			            show: false
+			        }        
+				});
+				
+			}
+			
 		 </script>  		
-
-
-
-		                       
-             
-              

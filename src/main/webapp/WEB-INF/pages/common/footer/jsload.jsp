@@ -14,6 +14,7 @@
 <script src="<c:url value="/js/jquery.flot.resize.js" />"></script>
 <script src="<c:url value="/js/jquery.flot.stack.js" />"></script>
 <script src="<c:url value="/js/jquery.flot.categories.js" />"></script>
+<script src="<c:url value="/js/syronex-colorpicker.js" />"></script>
 <script src="<c:url value="/js/graphtable.js" />"></script>
 <script src="<c:url value="/js/fullcalendar.min.js" />"></script>
 <script src="<c:url value="/js/chosen.jquery.min.js" />"></script>
