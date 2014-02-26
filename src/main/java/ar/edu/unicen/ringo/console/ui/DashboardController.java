@@ -22,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import ar.edu.unicen.ringo.console.model.Node;
 import ar.edu.unicen.ringo.console.model.Sla;
+import ar.edu.unicen.ringo.console.service.NodeManagementService;
 import ar.edu.unicen.ringo.console.service.SlaManagementService;
 import ar.edu.unicen.ringo.console.ui.dto.FlotData;
 
@@ -36,6 +38,9 @@ public class DashboardController {
 	private SlaManagementService service;
 	
 	@Autowired
+	private NodeManagementService service_node;	
+	
+	@Autowired
 	private Client client;	
 	
 	@RequestMapping("/")
@@ -46,28 +51,104 @@ public class DashboardController {
 	
     @ResponseBody
     @RequestMapping(value = "/data", method = RequestMethod.GET)	
-    public List<FlotData> data(@RequestParam(value="period", defaultValue="hour") String period) {
+    public HashMap<String, List<FlotData>> data(@RequestParam(value="period", defaultValue="hour") String period) {
     	List<Sla> slas = service.list();
     	
     	HashMap<String, DateHistogramFacet> data = generateData(period);
+    	HashMap<String, List<FlotData>> response = new HashMap<String, List<FlotData>>();
     	
-    	List<FlotData> response = new ArrayList<FlotData>();
+    	List<FlotData> mean = new ArrayList<FlotData>();
+    	List<FlotData> total = new ArrayList<FlotData>();
+    	List<FlotData> count = new ArrayList<FlotData>();
+    	
+    	List<FlotData> usage = new ArrayList<FlotData>();
+    	List<FlotData> invocations = new ArrayList<FlotData>();
+    	
+    	HashMap<String, Double> sla_nodes = new HashMap<String, Double>();;
+    	
     	for(Sla sla: slas){
-    		FlotData flotdata = new FlotData();
+    		sla_nodes.put(sla.getId(), new Double(0));
     		
-    		List<double[]> datalist = new ArrayList<double[]>();
+    		FlotData<List<double[]>> meanflotdata = new FlotData<List<double[]>>();
+    		FlotData<List<double[]>> totalflotdata = new FlotData<List<double[]>>();
+    		FlotData<List<double[]>> countflotdata = new FlotData<List<double[]>>();
+    		
+    		FlotData<Double> usageflotdata = new FlotData<Double>();
+    		Double usagedata = new Double(0);
+    		
+    		FlotData<Double> invocationsflotdata = new FlotData<Double>();
+    		Double invocationsdata = new Double(0);    		
+    		
+    		List<double[]> meandatalist = new ArrayList<double[]>();
+    		List<double[]> totaldatalist = new ArrayList<double[]>();
+    		List<double[]> countdatalist = new ArrayList<double[]>();
     		for(Entry entry : data.get(sla.getId()).getEntries()){
-    			double[] list = {entry.getTime(), entry.getMean()};
-    			datalist.add(list);
+    			double[] meanlist = {entry.getTime(), entry.getMean()};
+    			meandatalist.add(meanlist);
+    			
+    			double[] totallist = {entry.getTime(), entry.getTotal()};
+    			totaldatalist.add(totallist);
+    			usagedata += entry.getTotal();
+    			invocationsdata += entry.getCount();
+    			
+    			double[] countlist = {entry.getTime(), entry.getCount()};
+    			countdatalist.add(countlist);    			
     		}
     		
-    		flotdata.setLabel(sla.getName());
-    		flotdata.setColor(sla.getColor());
-    		flotdata.setData(datalist);
+    		meanflotdata.setLabel(sla.getName());
+    		meanflotdata.setColor(sla.getColor());
+    		meanflotdata.setData(meandatalist);
+
+    		totalflotdata.setLabel(sla.getName());
+    		totalflotdata.setColor(sla.getColor());
+    		totalflotdata.setData(totaldatalist);
     		
-    		response.add(flotdata);
+    		countflotdata.setLabel(sla.getName());
+    		countflotdata.setColor(sla.getColor());
+    		countflotdata.setData(countdatalist);   
+    		
+    		usageflotdata.setLabel(sla.getName());
+    		usageflotdata.setColor(sla.getColor());
+    		usageflotdata.setData(usagedata);
+    		
+    		invocationsflotdata.setLabel(sla.getName());
+    		invocationsflotdata.setColor(sla.getColor());
+    		invocationsflotdata.setData(invocationsdata);    
+    		
+    		mean.add(meanflotdata);
+    		total.add(totalflotdata);
+    		count.add(countflotdata);
+    		usage.add(usageflotdata);
+    		invocations.add(invocationsflotdata);
     	}
 
+    	List<Node> nodes = service_node.list();
+    	for(Node node: nodes){
+    		Double total_nodes = sla_nodes.get(node.getSla());
+    		sla_nodes.put(node.getSla(), total_nodes + 1);
+    	}    	
+    	
+    	List<FlotData> total_nodes = new ArrayList<FlotData>();
+    	
+    	for(Sla sla: slas) {
+    		FlotData<Double> nodesflotdata = new FlotData<Double>();
+    		Double nodesdata = sla_nodes.get(sla.getId());		
+    		
+    		nodesflotdata.setLabel(sla.getName());
+    		nodesflotdata.setColor(sla.getColor());
+    		nodesflotdata.setData(nodesdata);  
+    		
+    		total_nodes.add(nodesflotdata);
+    	}
+    	
+    	
+    	response.put("mean", mean);
+    	response.put("total", total);
+    	response.put("count", count);
+    	response.put("usage", usage);
+    	response.put("invocations", invocations);
+    	response.put("nodes", total_nodes);
+    	
     	return response;
     }
 	

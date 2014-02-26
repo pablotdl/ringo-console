@@ -1,13 +1,12 @@
 package ar.edu.unicen.ringo.console.ui.dto;
 
-import java.util.List;
 
 
-public class FlotData {
+public class FlotData<T> {
 
     private String label;
     private String color;    
-    private List<?> data;
+    private T data;
     
     public String getLabel() {
 		return label;
@@ -23,10 +22,10 @@ public class FlotData {
 		this.color = color;
 	}
 	
-	public List<?> getData() {
+	public T getData() {
 		return data;
 	}
-	public void setData(List<?> data) {
+	public void setData(T data) {
 		this.data = data;
 	}
 	   
