@@ -29,15 +29,19 @@
 		
 		<a id="menu-link" class="head-button-link menu-hide" href="#menu"><span>Menu</span></a>
 		<!--Logo-->
-		<a href="dashboard.html" class="logo"><h1>Ringo</h1></a>
+		<a href="dashboard.html" class="logo logotext"><h1>Ringo</h1></a>
 		<!--Logo END-->
-
-		<tiles:insertAttribute name="search" />
+		
+		
+<%-- 		<tiles:insertAttribute name="search" /> --%>
+		
 		
 		<div class="right">
-			<tiles:insertAttribute name="notification" />
-			<tiles:insertAttribute name="message" />
-			<tiles:insertAttribute name="config" />
+			
+<%-- 			<tiles:insertAttribute name="notification" /> --%>
+<%-- 			<tiles:insertAttribute name="message" /> --%>
+<%-- 			<tiles:insertAttribute name="config" /> --%>
+			
 			<tiles:insertAttribute name="profile" />
 		</div>
 		

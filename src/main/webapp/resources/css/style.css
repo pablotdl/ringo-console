@@ -114,8 +114,17 @@ table.table {
 	text-decoration:none;
 	color:#535457;
 }
+.logo.logotext {
+	background: none;
+	margin-top: 0px;
+	margin-left:20px;
+	color:#FFF;
+}
 .logo h1 {
 	text-indent:-9999px;
+}
+.logo.logotext h1 {
+	text-indent:0px;
 }
 .search {
 	margin-left:155px;
