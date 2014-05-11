@@ -4,7 +4,7 @@
 	<a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span
 		class="double-spacer"></span>
 		<div class="profile-avatar">
-			<img src="<c:url value="images/avatar.png" />" alt="">
+			<img src="<c:url value="/images/avatar.png" />" alt="">
 		</div>
 		<div class="profile-username">
 			<span>Welcome,</span> Administrator!

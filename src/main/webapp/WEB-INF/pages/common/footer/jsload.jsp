@@ -35,3 +35,5 @@
 
 <!--settings infobox charts-->
 <script src="<c:url value="/js/float.settings.infobox.js" />"></script>
+
+<script src="<c:url value="/javascripts/app.js" />"></script>

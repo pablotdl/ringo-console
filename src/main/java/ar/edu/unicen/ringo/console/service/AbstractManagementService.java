@@ -8,9 +8,11 @@ import org.elasticsearch.ElasticSearchException;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.io.stream.BytesStreamOutput;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.indices.IndexMissingException;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
@@ -92,10 +94,15 @@ public class AbstractManagementService<T extends Identificable> {
     }
 
     public List<T> list() {
+    	return list(null);
+    }
+    
+    public List<T> list(QueryBuilder query) {
     	List<T> results = new ArrayList<>(0);
     	try {
-    		SearchResponse response = client.prepareSearch(index).setTypes(entity)
-                .execute().actionGet();
+    		SearchRequestBuilder search = client.prepareSearch(index).setTypes(entity);
+    		if ( query != null ) search = search.setQuery(query);
+    		SearchResponse response = search.execute().actionGet();
     		SearchHits hits = response.getHits();
 	        results = new ArrayList<>(hits.getHits().length);
 	        for (SearchHit hit : hits) {

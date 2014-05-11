@@ -3,7 +3,7 @@
 
         <!--page title-->
         <div class="pagetitle">
-           <h1>Dashboard</h1> 
+           <h1><a href="/console-ui/?period=${period}" >Dashboard</a> / ${sla.name}</h1> 
            <div class="btn-group">
            	 <a href="?period=minute" class="btn <c:if test="${period=='minute'}">active</c:if>">Minute</a>
              <a href="?period=hour" class="btn <c:if test="${period=='hour'}">active</c:if>">Hour</a>
@@ -94,36 +94,16 @@
 		
 
 		<script type="text/javascript">
-			var slas = {};
-			<c:forEach items="${slas}" var="sla">
-				slas["${sla.name}"] = "${sla.id}";
-			</c:forEach>
 			
 			$( document ).ready(function() {
-				bindEvents();
 				setInterval(pollData, 1000);
 			});
 			
-			function bindEvents(){
-				$("#usage-stat").bind("plotclick", function(event, pos, obj) {
-					if (!obj) { return;}
-					window.location = "/console-ui/dashboard/sla/" + slas[obj.series.label] + "?period=${period}";
-				});	
-				
-				$("#invocations-stat").bind("plotclick", function(event, pos, obj) {
-					if (!obj) { return;}
-					window.location = "/console-ui/dashboard/sla/" + slas[obj.series.label] + "?period=${period}";
-				});	
-				
-				$("#nodes-stat").bind("plotclick", function(event, pos, obj) {
-					if (!obj) { return;}
-					window.location = "/console-ui/dashboard/sla/" + slas[obj.series.label] + "?period=${period}";
-				});					 
-			}
+
 			
 			function pollData(){
 				$.ajax({
-					url: "data?period=${period}",
+					url: "${sla.id}/data?period=${period}",
 					type: "GET",
 					dataType: "json",
 					success: onDataReceived
@@ -185,7 +165,7 @@
 				$.plot('#usage-stat', data.usage, options_pie);
 				$.plot('#invocations-stat', data.invocations, options_pie);
 				$.plot('#nodes-stat', data.nodes, options_pie);
-				
+			
 			}
 			
 		 </script>  		

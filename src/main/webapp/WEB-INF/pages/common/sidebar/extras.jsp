@@ -1,5 +1,23 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-          <!--New Files-->
+<!--Generate Data -->
+<div class="media-files">
+	<div class="title"><i class="icon-bar-chart"></i> Generate Data</div>
+	<p>
+		<input type="checkbox" id="generate" name="generate" /> 
+		<label for="generate"><span></span> Enable</label>
+	</p>
+	<script type="text/javascript">
+		$( document ).ready(function() {
+			if (sessionStorage.generate == "true") {
+				$("#generate").attr("checked", "checked");
+			};
+			$("#generate").on("change", function() { toggleGenerate(); });
+		});
+	</script>
+</div>
+<!--Generate Data END-->
+
+<!--New Files
           <div class="new-files">
              <div class="title">New Files</div>
              
@@ -50,12 +68,12 @@
              </div>
           </div>
           <!--New Files END-->
-          
-          <!--Upload Box-->
+
+<!--Upload Box
           <div class="upload-box">Drop files <br> here to upload</div>
           <!--Upload Box END-->
-          
-          <!--Media Files-->
+
+<!--Media Files
           <div class="media-files">
              <div class="title">Media Files</div>
              <p>This is Photoshop's version  of Lorem Ipsum.</p>
@@ -74,7 +92,7 @@
              </div>
           </div>
           <!--Media Files END-->
-          
-          <!--Add New Widget-->
+
+<!--Add New Widget
           <a href="#" class="add-widget-link">Add New Widget</a>
           <!--Add New Widget END-->

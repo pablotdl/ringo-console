@@ -83,6 +83,7 @@
     <mvc:default-servlet-handler />
 	<mvc:resources mapping="/css/**" location="/resources/css/" />
 	<mvc:resources mapping="/js/**" location="/resources/js/" />
+	<mvc:resources mapping="/javascripts/**" location="/resources/javascripts/" />
 	<mvc:resources mapping="/images/**" location="/resources/images/" />
 
     <elasticsearch:client id="esClient" esNodes="${elasticsearch-nodes}"/>

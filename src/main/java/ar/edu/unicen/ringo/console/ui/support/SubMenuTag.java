@@ -38,7 +38,7 @@ public class SubMenuTag extends AbstractMenuTag {
                     out.writeAttribute("class", "active");
                 }
                 out.startTag("a");
-                out.writeAttribute("href", getRequestContext().getContextUrl(it.getHref()));
+                out.writeAttribute("href", getRequestContext().getContextUrl(it.getHref()) + "?" + getRequestContext().getQueryString());
                 out.startTag("i");
                 out.writeAttribute("class", it.getStyleClass());
                 out.endTag(true);
