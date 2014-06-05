@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!--Generate Data -->
 <div class="media-files">
-	<div class="title"><i class="icon-bar-chart"></i> Generate Data</div>
+	<div class="title"><i class="icon-tasks"></i> Generate Data</div>
 	<p>
 		<input type="checkbox" id="generate" name="generate" /> 
 		<label for="generate"><span></span> Enable</label>

@@ -55,3 +55,19 @@ div.first a.collapsed .icon-chevron-down {
 .node.normal {
 	border: 1px solid #b3b3b3; 
 }
+
+.friend.sla {
+	border-top: 0px;
+}
+
+.friend.sla div.f-avatar{
+	margin-right: 5px;
+	margin-top: 5px;
+	border-width: 3px;
+}
+
+.friend.sla div.f-avatar div{
+	width: 100%;
+	height: 100%;
+	opacity: 0.6;
+}

@@ -3,7 +3,8 @@
   <items>
     <item name="general" styleClass="general" label="General">
         <submenu>
-            <item name="dashboard" label="Dashboard" styleClass="icon-home" href="/" />
+            <item name="dashboard" label="Dashboard" styleClass="icon-bar-chart" href="/" />
+            <item name="control" label="Control" styleClass="icon-cog" href="/control" />
         </submenu>
     </item>
     <item name="admin" styleClass="components" label="Admin">

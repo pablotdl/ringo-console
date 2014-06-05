@@ -62,7 +62,7 @@ public class ManagementController {
     //SLA
     @RequestMapping(value = "/sla", method = RequestMethod.GET)
     public String list() {
-        return "sla.list";
+        return "admin.sla.list";
     }
 
     @ResponseBody
@@ -73,14 +73,14 @@ public class ManagementController {
 
     @RequestMapping(value = "/sla/new", method = RequestMethod.GET)
     public String newSla(@ModelAttribute("sla") Sla sla) {
-        return "sla.form";
+        return "admin.sla.form";
     }
 
     @RequestMapping(value = "/sla/{id}", method = RequestMethod.GET)
     public String editSla(@ModelAttribute("sla") Sla sla,
             @PathVariable("id") String id) {
         sla.loadFrom(slaManagementService.get(id));
-        return "sla.form";
+        return "admin.sla.form";
     }
     
     @RequestMapping(value = "/sla/{id}", method = RequestMethod.POST)
@@ -108,7 +108,7 @@ public class ManagementController {
     @RequestMapping(value = "/node", method = RequestMethod.GET)
     public String showNodeList(ModelMap map) {
     	map.put("slas", this.slaManagementService.list());
-        return "node.list";
+        return "admin.node.list";
     }
 
     @ResponseBody
@@ -120,7 +120,7 @@ public class ManagementController {
     @RequestMapping(value = "/node/new", method = RequestMethod.GET)
     public String newNode(@ModelAttribute("node") Node node, ModelMap map) {
         map.put("slas", this.slaManagementService.list());
-        return "node.form";
+        return "admin.node.form";
     }
 
     @RequestMapping(value = "/node/{id}", method = RequestMethod.GET)
@@ -128,7 +128,7 @@ public class ManagementController {
             @PathVariable("id") String id, ModelMap map) {
         node.loadFrom(nodeManagementService.get(id));
         map.put("slas", this.slaManagementService.list());
-        return "node.form";
+        return "admin.node.form";
     }
 
     @RequestMapping(value = "/node/new", method = RequestMethod.POST)
@@ -157,7 +157,7 @@ public class ManagementController {
     public String showInvocationList(ModelMap map) {
         map.put("slas", this.slaManagementService.list());
         map.put("nodes", this.nodeManagementService.list());    	
-        return "invocation.list";
+        return "admin.invocation.list";
     }
 
     @ResponseBody
@@ -170,12 +170,12 @@ public class ManagementController {
     public String newInvocation(@ModelAttribute("invocation") Invocation invocation, ModelMap map) {
         map.put("slas", this.slaManagementService.list());
         map.put("nodes", this.nodeManagementService.list());
-        return "invocation.form";
+        return "admin.invocation.form";
     }
     
     @RequestMapping(value = "/invocation/generate", method = RequestMethod.GET)
     public String newInvocation(@ModelAttribute("generate") Generate generate) {
-        return "invocation.generate";
+        return "admin.invocation.generate";
     }    
 
     @RequestMapping(value = "/invocation/{id}", method = RequestMethod.GET)
@@ -184,7 +184,7 @@ public class ManagementController {
         invocation.loadFrom(invocationManagementService.get(id));
         map.put("slas", this.slaManagementService.list());
         map.put("nodes", this.nodeManagementService.list());
-        return "invocation.form";
+        return "admin.invocation.form";
     }
 
     @RequestMapping(value = "/invocation/new", method = RequestMethod.POST)

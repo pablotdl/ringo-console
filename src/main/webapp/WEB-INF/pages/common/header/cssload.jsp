@@ -34,6 +34,9 @@
 <link rel="alternate stylesheet" type="text/css" media="screen"
 	title="purple-theme" href="<c:url value="/css/color/purple.css" />" />
 
+<link rel="stylesheet" href="<c:url value="/stylesheets/app.css" />" />	
+	
+
 <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
