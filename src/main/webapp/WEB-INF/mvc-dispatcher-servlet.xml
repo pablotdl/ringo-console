@@ -12,7 +12,7 @@
         http://www.pilato.fr/schema/elasticsearch
         http://www.pilato.fr/schema/elasticsearch/elasticsearch-0.2.xsd">
 
-	<context:component-scan base-package="ar.edu.unicen.ringo.console.ui, ar.edu.unicen.ringo.console.service" />
+	<context:component-scan base-package="ar.edu.unicen.ringo.console.ui, ar.edu.unicen.ringo.console.service, ar.edu.unicen.ringo.console.vm.docker" />
 	<context:annotation-config />
 
     <bean id="menu" class="javax.xml.bind.JAXB" factory-method="unmarshal">
@@ -94,6 +94,7 @@
 				<prop key="elasticsearch-nodes">
 					localhost:9300
 				</prop>
+                <prop key="docker.host">http://localhost:4243</prop>
 			</props>
 		</property>
 	</bean>

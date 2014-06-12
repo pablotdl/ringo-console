@@ -89,6 +89,11 @@
             <version>2.1</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.kpelykh</groupId>
+            <artifactId>docker-java</artifactId>
+            <version>0.8.1</version>
+        </dependency>
 	</dependencies>
 	
 	<build>
@@ -105,6 +110,7 @@
     					<contextPath>/console-ui</contextPath>
     				</webApp>
     				<reload>manual</reload>
+                    <useTestClasspath>true</useTestClasspath>
 				</configuration>	  			
 			</plugin>
 			<plugin>
