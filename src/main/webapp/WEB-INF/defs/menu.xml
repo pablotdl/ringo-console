@@ -11,6 +11,7 @@
             <item name="sla" label="SLA" styleClass="icon-picture" href="/admin/sla" />
             <item name="node" label="Nodes" styleClass="icon-picture" href="/admin/node" />
             <item name="invocation" label="Invocations" styleClass="icon-picture" href="/admin/invocation" />
+            <item name="cms" label="VMs" styleClass="icon-picture" href="/admin/vms" />
         </submenu>
     </item>
   </items>
